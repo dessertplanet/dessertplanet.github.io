@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale | default "en" }}">
+<head>
+	{{ partial "head.html" . }}
+</head>
+<body>
+	<div class="shell">
+		{{ partial "header.html" . }}
+		{{ block "main" . }}{{ end }}
+		{{ partial "footer.html" . }}
+	</div>
+</body>
+</html>

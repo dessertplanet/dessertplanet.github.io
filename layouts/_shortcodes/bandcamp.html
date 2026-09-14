@@ -1,0 +1,12 @@
+{{- $id := or (.Get "album") (.Get "track") -}}
+{{- $kind := cond (.Get "album") "album" "track" -}}
+{{- with $id -}}
+<div class="embed embed-audio">
+	<iframe
+		title="Bandcamp player"
+		src="https://bandcamp.com/EmbeddedPlayer/{{ $kind }}={{ . }}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/"
+		seamless loading="lazy"></iframe>
+</div>
+{{- else -}}
+{{- errorf "bandcamp shortcode needs album= or track= (called from %s)" .Position -}}
+{{- end -}}

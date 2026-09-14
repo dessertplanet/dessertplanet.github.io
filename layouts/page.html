@@ -1,0 +1,32 @@
+{{ define "main" }}
+<main id="top">
+	<article class="detail">
+		<div class="section-heading">
+			<h1>{{ .Title }}</h1>
+			{{- with .Params.number }}<span>{{ . }}</span>{{ end }}
+		</div>
+
+		{{- with .Params.summary }}
+		<p class="lede">{{ . }}</p>
+		{{- end }}
+
+		{{- with .Params.tags }}
+		<div class="project-meta detail-meta">{{ range . }}<span>{{ . }}</span>{{ end }}</div>
+		{{- end }}
+
+		<div class="prose">
+			{{ .Content }}
+		</div>
+
+		{{- with .Params.links }}
+		<div class="detail-links">
+			{{- range . }}
+			<a href="{{ .url }}" target="_blank" rel="noreferrer">{{ .name }} &#8599;</a>
+			{{- end }}
+		</div>
+		{{- end }}
+
+		<a class="back" href="{{ "/#work" }}">&#8592; All work</a>
+	</article>
+</main>
+{{ end }}

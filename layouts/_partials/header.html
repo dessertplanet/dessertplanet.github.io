@@ -1,0 +1,12 @@
+<header>
+	<a class="wordmark" href="{{ "/" | relURL }}">{{ site.Title }}</a>
+	<nav aria-label="Primary navigation">
+		{{- range site.Menus.main }}
+		{{- if .Params.external }}
+		<a href="{{ .URL }}" target="_blank" rel="noreferrer">{{ .Name }} &#8599;</a>
+		{{- else }}
+		<a href="{{ .URL }}">{{ .Name }}</a>
+		{{- end }}
+		{{- end }}
+	</nav>
+</header>

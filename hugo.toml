@@ -1,0 +1,52 @@
+baseURL = "https://dessertplanet.co/"
+locale = "en-us"
+title = "dessertplanet.co"
+enableRobotsTXT = true
+
+# Project repos with Pages enabled claim dessertplanet.co/<repo-name>/.
+# Keep generated top-level paths clear of repo names; project pages live under /projects/.
+
+[params]
+	description = "Selected projects by Dune Desormeaux, a musician and creative technologist in Seattle."
+	themeColor = "#f3f0e8"
+	location = "Seattle, Washington"
+	tagline = "Sound, software & small machines."
+	intro = "I’m Dune, a musician and creative technologist building tools for making, listening, and experimenting."
+	portrait = "https://avatars.githubusercontent.com/u/9758721?v=4"
+	copyrightName = "Dune Dessertplanet"
+	workYears = "2024&ndash;Now"
+
+[[params.socials]]
+	name = "GitHub"
+	url = "https://github.com/dessertplanet"
+[[params.socials]]
+	name = "YouTube"
+	url = "https://youtube.com/@dessertplanet"
+[[params.socials]]
+	name = "Instagram"
+	url = "https://www.instagram.com/dessertplanet"
+[[params.socials]]
+	name = "llllllll"
+	url = "https://llllllll.co/u/dessertplanet/summary"
+
+[[menu.main]]
+	name = "Work"
+	url = "/#work"
+	weight = 1
+[[menu.main]]
+	name = "About"
+	url = "/#about"
+	weight = 2
+[[menu.main]]
+	name = "GitHub"
+	url = "https://github.com/dessertplanet"
+	weight = 3
+	[menu.main.params]
+		external = true
+
+[markup.goldmark.renderer]
+	unsafe = true
+
+# No taxonomy pages: `tags` in front matter are display labels, not a filterable
+# taxonomy. Removing this block would generate /tags/ and /categories/ pages.
+[taxonomies]

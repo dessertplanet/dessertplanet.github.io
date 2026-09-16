@@ -3,8 +3,14 @@
 	<section class="intro" aria-labelledby="intro-title">
 		<h1 id="intro-title">{{ site.Params.tagline }}</h1>
 		<div class="intro-aside">
-			<p>{{ site.Params.intro }}</p>
 			<div class="location"><span></span> {{ site.Params.location }}</div>
+		</div>
+	</section>
+
+	<section class="about" id="about" aria-label="About">
+		<div class="about-copy">
+			{{ .Content }}
+			<img class="portrait" src="{{ site.Params.portrait }}" alt="Portrait of Dune Desormeaux" width="112" height="112">
 		</div>
 	</section>
 
@@ -18,14 +24,6 @@
 			{{- range (where site.RegularPages "Section" "projects").ByWeight }}
 			{{ partial "project-card.html" . }}
 			{{- end }}
-		</div>
-	</section>
-
-	<section class="about" id="about" aria-labelledby="about-title">
-		<span class="about-label" id="about-title">About</span>
-		<div class="about-copy">
-			{{ .Content }}
-			<img class="portrait" src="{{ site.Params.portrait }}" alt="Portrait of Dune Desormeaux" width="112" height="112">
 		</div>
 	</section>
 </main>

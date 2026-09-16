@@ -11,8 +11,7 @@ enableRobotsTXT = true
 	themeColor = "#f3f0e8"
 	location = "Seattle, Washington"
 	tagline = "Sound, software & small machines."
-	intro = "I’m Dune, a musician and creative technologist building tools for making, listening, and experimenting."
-	portrait = "https://avatars.githubusercontent.com/u/9758721?v=4"
+	portrait = "/images/portrait.jpg"
 	copyrightName = "Dune Dessertplanet"
 	workYears = "2024&ndash;Now"
 
@@ -24,7 +23,7 @@ enableRobotsTXT = true
 	url = "https://youtube.com/@dessertplanet"
 [[params.socials]]
 	name = "Instagram"
-	url = "https://www.instagram.com/dessertplanet"
+	url = "https://www.instagram.com/dessertplanet_"
 [[params.socials]]
 	name = "llllllll"
 	url = "https://llllllll.co/u/dessertplanet/summary"

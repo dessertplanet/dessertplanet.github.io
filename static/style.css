@@ -217,7 +217,9 @@ h2 {
 	aspect-ratio: 1;
 	object-fit: cover;
 	border-radius: 50%;
-	filter: contrast(1.08);
+	filter: contrast(1) saturate(0.85);
+	mask-image: radial-gradient(circle farthest-side, black 0%, black 78%, transparent 100%);
+	-webkit-mask-image: radial-gradient(circle farthest-side, black 0%, black 78%, transparent 100%);
 }
 
 footer {

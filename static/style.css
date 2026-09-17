@@ -175,16 +175,15 @@ h2 {
 }
 
 .about {
-	padding: 100px 0;
+	padding: 20px 0;
 	border-bottom: 1px solid var(--ink);
 }
 
 .about-copy {
 	display: grid;
-	/* The portrait column is definite so it never depends on the bio's width, which is
-	   what the resize script below relies on. The bio column fills whatever space is
-	   left, all the way to the right edge of the shell. */
-	grid-template-columns: var(--portrait-size, clamp(104px, 11vw, 170px)) 1fr;
+	/* The portrait stays a fixed size regardless of how much text sits beside it; the
+	   bio column fills whatever space is left, all the way to the left edge of the shell. */
+	grid-template-columns: 1fr 220px;
 	justify-content: start;
 	gap: 40px;
 	align-items: center;
@@ -192,20 +191,16 @@ h2 {
 
 .about-copy p {
 	margin: 0;
+	margin-left: clamp(24px, 12vw, 160px);
+	text-align: right;
 	font-family: "Fraunces", sans-serif;
 	color: var(--ink-light);
-	font-size: clamp(27px, 3.2vw, 42px);
+	font-size: 20px;
 	line-height: 1.12;
 	letter-spacing: 0;
 }
 
-/* The portrait is matched to the bio's height by the small script in home.html, which
-   sets --portrait-size. Sizing a square off a sibling's height has no reliable pure-CSS
-   form: every version depends on a grid track resolving its width from a row height that
-   isn't known yet, and engines disagree. The clamp() fallback above keeps the circle a
-   sensible fixed size when that script doesn't run. */
 .portrait-frame {
-	order: -1;
 	position: relative;
 	width: 100%;
 	aspect-ratio: 1;
@@ -299,7 +294,13 @@ footer small {
 	}
 
 	.portrait-frame {
+		order: -1;
 		width: 96px;
+	}
+
+	.about-copy p {
+		margin-left: 0;
+		text-align: left;
 	}
 
 	footer {

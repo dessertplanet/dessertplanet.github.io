@@ -21,7 +21,7 @@ html {
 
 body {
 	position: relative;
-	overflow-x: hidden;
+	min-height: 100vh;
 	margin: 0;
 	background: linear-gradient(to bottom, var(--paper), var(--paper-deep));
 	color: var(--ink);
@@ -32,22 +32,29 @@ body {
 
 /* Decorative only: the planet artwork lives at the bottom of the page as part of
    the gradient, not as a portrait. Sized in vw so it scales with the viewport. The
-   circle's own mask fades its edge to nothing, so it blends into the gradient rather
-   than getting a hard clip; most of it just bleeds off the right edge of the page. */
+   wrapper is exactly body-width (never wider), so its own overflow:hidden clips the
+   circle's horizontal bleed locally instead of touching body/html overflow, which
+   would otherwise pin the page's scrollable height to the viewport. The circle's own
+   mask fades its edge to nothing so what remains blends into the gradient. */
 .planet-decor {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 50vw;
+	max-height: 520px;
+	overflow: hidden;
+	pointer-events: none;
+	opacity: 0.5;
+}
+
+.planet-decor img {
 	position: absolute;
 	right: -18vw;
 	bottom: 0;
 	width: 50vw;
 	max-width: 520px;
 	aspect-ratio: 1;
-	pointer-events: none;
-	opacity: 0.5;
-}
-
-.planet-decor img {
-	width: 100%;
-	height: 100%;
 	object-fit: cover;
 	border-radius: 50%;
 	filter: contrast(1) saturate(0.85);
@@ -96,8 +103,7 @@ nav a:hover,
 }
 
 .intro {
-	padding: 56px 0;
-	border-bottom: 1px solid var(--ink);
+	padding: 60px 0;
 }
 
 h1 {
@@ -209,7 +215,7 @@ h2 {
 
 .about-copy p {
 	margin: 0;
-	text-align: center;
+	text-align: left;
 	font-family: "Fraunces", sans-serif;
 	color: var(--ink);
 	font-size: 20px;
@@ -247,7 +253,10 @@ footer small {
 	}
 
 	nav {
-		gap: 14px;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		row-gap: 6px;
+		column-gap: 12px;
 		font-size: 11px;
 	}
 
@@ -292,6 +301,10 @@ footer small {
 	}
 
 	.planet-decor {
+		height: 80vw;
+	}
+
+	.planet-decor img {
 		right: -32vw;
 		width: 80vw;
 	}

@@ -29,7 +29,25 @@ enableRobotsTXT = true
 [[menu.main]]
 	name = "GitHub"
 	url = "https://github.com/dessertplanet"
+	weight = 1
+	[menu.main.params]
+		external = true
+[[menu.main]]
+	name = "YouTube"
+	url = "https://youtube.com/@dessertplanet"
 	weight = 2
+	[menu.main.params]
+		external = true
+[[menu.main]]
+	name = "Instagram"
+	url = "https://www.instagram.com/dessertplanet_"
+	weight = 3
+	[menu.main.params]
+		external = true
+[[menu.main]]
+	name = "llllllll"
+	url = "https://llllllll.co/u/dessertplanet/summary"
+	weight = 4
 	[menu.main.params]
 		external = true
 

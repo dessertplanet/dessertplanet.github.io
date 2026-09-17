@@ -9,5 +9,44 @@
 		{{ block "main" . }}{{ end }}
 		{{ partial "footer.html" . }}
 	</div>
+
+	{{/* Chrome/Safari tint their UI chrome from the static theme-color meta tag, not
+	     from the page's gradient, so the overscroll bounce at the bottom flashes the
+	     old flat green instead of the mauve it's actually sitting on. Keep it in sync
+	     with scroll position. */}}
+	<script>
+	(function () {
+		var meta = document.querySelector('meta[name="theme-color"]');
+		if (!meta) return;
+
+		function toRgb(value) {
+			var probe = document.createElement("div");
+			probe.style.color = value;
+			document.body.appendChild(probe);
+			var rgb = getComputedStyle(probe).color.match(/\d+/g).slice(0, 3).map(Number);
+			probe.remove();
+			return rgb;
+		}
+
+		var style = getComputedStyle(document.documentElement);
+		var top = toRgb(style.getPropertyValue("--paper"));
+		var bottom = toRgb(style.getPropertyValue("--paper-deep"));
+
+		function mix(a, b, t) {
+			return Math.round(a + (b - a) * t);
+		}
+
+		function update() {
+			var max = document.documentElement.scrollHeight - window.innerHeight;
+			var t = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+			var rgb = [mix(top[0], bottom[0], t), mix(top[1], bottom[1], t), mix(top[2], bottom[2], t)];
+			meta.setAttribute("content", "rgb(" + rgb.join(",") + ")");
+		}
+
+		document.addEventListener("scroll", update, { passive: true });
+		window.addEventListener("resize", update);
+		update();
+	})();
+	</script>
 </body>
 </html>

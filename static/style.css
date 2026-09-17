@@ -2,6 +2,7 @@
 
 :root {
 	--paper: #344b3a;
+	--paper-deep: #4a3548;
 	--ink: #b9b95f;
 	--ink-light: #d9d9a7;
 	--mint: #c8f5c0;
@@ -15,11 +16,12 @@
 
 html {
 	scroll-behavior: smooth;
+	background: linear-gradient(to bottom, var(--paper), var(--paper-deep));
 }
 
 body {
 	margin: 0;
-	background: var(--paper);
+	background: linear-gradient(to bottom, var(--paper), var(--paper-deep));
 	color: var(--ink);
 	font-family: "Instrument Sans", sans-serif;
 	font-size: 14px;
@@ -192,7 +194,7 @@ h2 {
 .about-copy p {
 	max-width: 710px;
 	margin: 0;
-	font-family: "Instrument Sans", sans-serif;
+	font-family: "Fraunces", sans-serif;
 	color: var(--ink-light);
 	font-size: clamp(27px, 3.2vw, 42px);
 	line-height: 1.12;

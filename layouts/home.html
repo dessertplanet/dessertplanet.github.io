@@ -7,9 +7,6 @@
 	<section class="about" id="about" aria-label="About">
 		<div class="about-copy">
 			{{ .Content }}
-			<div class="portrait-frame">
-				<img class="portrait" src="{{ site.Params.portrait }}" alt="Portrait of Dune Desormeaux" width="460" height="460">
-			</div>
 		</div>
 	</section>
 
@@ -21,4 +18,10 @@
 		</div>
 	</section>
 </main>
+{{ end }}
+
+{{ define "decor" }}
+<div class="planet-decor" aria-hidden="true">
+	<img src="{{ site.Params.portrait }}" alt="">
+</div>
 {{ end }}

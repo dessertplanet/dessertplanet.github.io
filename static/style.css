@@ -20,12 +20,39 @@ html {
 }
 
 body {
+	position: relative;
+	overflow-x: hidden;
 	margin: 0;
 	background: linear-gradient(to bottom, var(--paper), var(--paper-deep));
 	color: var(--ink);
 	font-family: "Instrument Sans", sans-serif;
 	font-size: 14px;
 	line-height: 1.55;
+}
+
+/* Decorative only: the planet artwork lives at the bottom of the page as part of
+   the gradient, not as a portrait. Sized in vw so it scales with the viewport. The
+   circle's own mask fades its edge to nothing, so it blends into the gradient rather
+   than getting a hard clip; most of it just bleeds off the right edge of the page. */
+.planet-decor {
+	position: absolute;
+	right: -18vw;
+	bottom: 0;
+	width: 50vw;
+	max-width: 520px;
+	aspect-ratio: 1;
+	pointer-events: none;
+	opacity: 0.5;
+}
+
+.planet-decor img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+	filter: contrast(1) saturate(0.85);
+	mask-image: radial-gradient(circle farthest-side, black 0%, black 55%, transparent 100%);
+	-webkit-mask-image: radial-gradient(circle farthest-side, black 0%, black 55%, transparent 100%);
 }
 
 a {
@@ -39,6 +66,7 @@ a:focus-visible {
 }
 
 .shell {
+	position: relative;
 	width: min(calc(100% - 48px), var(--max-width));
 	margin: 0 auto;
 }
@@ -179,43 +207,14 @@ h2 {
 	border-bottom: 1px solid var(--ink);
 }
 
-.about-copy {
-	display: grid;
-	/* The portrait stays a fixed size regardless of how much text sits beside it; the
-	   bio column fills whatever space is left, all the way to the left edge of the shell. */
-	grid-template-columns: 1fr 220px;
-	justify-content: start;
-	gap: 40px;
-	align-items: center;
-}
-
 .about-copy p {
 	margin: 0;
-	margin-left: clamp(24px, 12vw, 160px);
-	text-align: right;
+	text-align: center;
 	font-family: "Fraunces", sans-serif;
-	color: var(--ink-light);
+	color: var(--ink);
 	font-size: 20px;
 	line-height: 1.12;
 	letter-spacing: 0;
-}
-
-.portrait-frame {
-	position: relative;
-	width: 100%;
-	aspect-ratio: 1;
-}
-
-.portrait {
-	position: absolute;
-	inset: 0;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	border-radius: 50%;
-	filter: contrast(1) saturate(0.85);
-	mask-image: radial-gradient(circle farthest-side, black 0%, black 78%, transparent 100%);
-	-webkit-mask-image: radial-gradient(circle farthest-side, black 0%, black 78%, transparent 100%);
 }
 
 footer {
@@ -287,20 +286,14 @@ footer small {
 		padding: 72px 0;
 	}
 
-	.about-copy {
-		grid-template-columns: 1fr;
-		justify-content: start;
-		margin: 0;
-	}
-
-	.portrait-frame {
-		order: -1;
-		width: 96px;
-	}
-
 	.about-copy p {
 		margin-left: 0;
 		text-align: left;
+	}
+
+	.planet-decor {
+		right: -32vw;
+		width: 80vw;
 	}
 
 	footer {

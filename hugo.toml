@@ -12,7 +12,6 @@ enableRobotsTXT = true
 	tagline = "Sound, software & small machines."
 	portrait = "/images/portrait.jpg"
 	copyrightName = "Dune Dessertplanet"
-	workYears = "2024&ndash;Now"
 
 [[params.socials]]
 	name = "GitHub"
@@ -28,17 +27,9 @@ enableRobotsTXT = true
 	url = "https://llllllll.co/u/dessertplanet/summary"
 
 [[menu.main]]
-	name = "Work"
-	url = "/#work"
-	weight = 1
-[[menu.main]]
-	name = "About"
-	url = "/#about"
-	weight = 2
-[[menu.main]]
 	name = "GitHub"
 	url = "https://github.com/dessertplanet"
-	weight = 3
+	weight = 2
 	[menu.main.params]
 		external = true
 

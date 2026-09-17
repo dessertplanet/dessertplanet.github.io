@@ -4,9 +4,8 @@
 	--paper: #344b3a;
 	--ink: #b9b95f;
 	--ink-light: #d9d9a7;
-	--line: #cbc8be;
-	--accent: #ffa183;
-	--rollover: #c8f5c0;
+	--mint: #c8f5c0;
+	--rollover: #ffa183;
 	--max-width: 1180px;
 }
 
@@ -28,12 +27,12 @@ body {
 }
 
 a {
-	color: var(--rollover);
+	color: var(--mint);
 	text-decoration: none;
 }
 
 a:focus-visible {
-	outline: 2px solid var(--accent);
+	outline: 2px solid var(--rollover);
 	outline-offset: 4px;
 }
 
@@ -58,14 +57,12 @@ header {
 nav {
 	display: flex;
 	gap: 24px;
-	color: var(--rollover);
-	font-size: 12px;
-	text-transform: uppercase;
+	color: var(--mint);
 }
 
 nav a:hover,
 .socials a:hover {
-	color: var(--accent);
+	color: var(--rollover);
 }
 
 .intro {
@@ -93,7 +90,7 @@ h1 {
 
 h2 {
 	margin: 0;
-	color: var(--ink-light);
+	color: var(--ink);
 	font-family: "Fraunces", serif;
 	font-size: clamp(28px, 3.4vw, 40px);
 	font-weight: 500;
@@ -101,13 +98,11 @@ h2 {
 }
 
 .section-heading span {
-	color: var(--ink-light);
+	color: var(--ink);
 	font-size: 11px;
-	text-transform: uppercase;
 }
 
 .projects {
-	border-top: 1px solid var(--ink);
 	border-bottom: 1px solid var(--ink);
 }
 
@@ -117,7 +112,7 @@ h2 {
 	gap: 24px;
 	align-items: center;
 	min-height: 146px;
-	border-bottom: 1px solid var(--line);
+	border-bottom: 1px solid var(--ink);
 	transition: background-color 180ms ease, padding 180ms ease;
 }
 
@@ -128,7 +123,7 @@ h2 {
 .project:hover {
 	padding-right: 14px;
 	padding-left: 14px;
-	background: var(--rollover);
+	background: var(--mint);
 	color: var(--paper);
 }
 
@@ -148,9 +143,23 @@ h2 {
 	color: var(--paper);
 }
 
+.project-title .project-meta {
+	margin-top: 8px;
+}
+
+.project:hover .project-title .project-meta {
+	color: var(--paper);
+}
+
 .project-description p {
 	max-width: 52ch;
-	margin: 0 0 10px;
+	margin: 0;
+	color: var(--ink);
+	font-size: 20px;
+}
+
+.project:hover .project-description p {
+	color: var(--paper);
 }
 
 .arrow {
@@ -184,6 +193,7 @@ h2 {
 	max-width: 710px;
 	margin: 0;
 	font-family: "Instrument Sans", sans-serif;
+	color: var(--ink-light);
 	font-size: clamp(27px, 3.2vw, 42px);
 	line-height: 1.12;
 	letter-spacing: 0;
@@ -225,7 +235,6 @@ footer {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px 24px;
-	text-transform: uppercase;
 }
 
 footer small {
@@ -344,7 +353,7 @@ footer small {
 
 .detail-meta {
 	padding-bottom: 28px;
-	border-bottom: 1px solid var(--line);
+	border-bottom: 1px solid var(--ink);
 }
 
 .prose {
@@ -358,12 +367,12 @@ footer small {
 
 .prose a {
 	text-decoration: underline;
-	text-decoration-color: var(--line);
+	text-decoration-color: var(--ink-light);
 	text-underline-offset: 3px;
 }
 
 .prose a:hover {
-	text-decoration-color: var(--accent);
+	text-decoration-color: var(--rollover);
 }
 
 /* Hugo's built-in youtube shortcode ships its own inline aspect-ratio box,
@@ -385,24 +394,24 @@ footer small {
 	flex-wrap: wrap;
 	gap: 12px 24px;
 	padding: 24px 0;
-	border-top: 1px solid var(--line);
-	color: var(--rollover);
+	border-top: 1px solid var(--ink);
+	color: var(--mint);
 	font-size: 11px;
 	text-transform: uppercase;
 }
 
 .detail-links a:hover {
-	color: var(--accent);
+	color: var(--rollover);
 }
 
 .back {
 	display: inline-block;
 	padding-top: 24px;
-	color: var(--rollover);
+	color: var(--mint);
 	font-size: 11px;
 	text-transform: uppercase;
 }
 
 .back:hover {
-	color: var(--accent);
+	color: var(--rollover);
 }

@@ -7,9 +7,35 @@
 	<section class="about" id="about" aria-label="About">
 		<div class="about-copy">
 			{{ .Content }}
-			<img class="portrait" src="{{ site.Params.portrait }}" alt="Portrait of Dune Desormeaux" width="112" height="112">
+			<div class="portrait-frame">
+				<img class="portrait" src="{{ site.Params.portrait }}" alt="Portrait of Dune Desormeaux" width="460" height="460">
+			</div>
 		</div>
 	</section>
+
+	{{/* Matches the portrait to the height of the bio beside it. Progressive
+	     enhancement: without it the CSS clamp() gives a fixed circle. */}}
+	<script>
+	(function () {
+		var about = document.querySelector(".about-copy");
+		var copy = about && about.querySelector("p");
+		if (!copy || !window.ResizeObserver) return;
+
+		var narrow = window.matchMedia("(max-width: 760px)");
+
+		function sync() {
+			if (narrow.matches) {
+				about.style.removeProperty("--portrait-size");
+			} else {
+				about.style.setProperty("--portrait-size", copy.offsetHeight + "px");
+			}
+		}
+
+		new ResizeObserver(sync).observe(copy);
+		narrow.addEventListener("change", sync);
+		sync();
+	})();
+	</script>
 
 	<section id="work" aria-labelledby="work-title">
 		<div class="section-heading">

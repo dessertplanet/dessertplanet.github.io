@@ -1,7 +1,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="{{ .Description | default .Params.summary | default site.Params.description }}">
+{{- $title := cond .IsHome site.Title (printf "%s · %s" .Title site.Title) }}
+{{- $desc := .Description | default .Params.summary | default site.Params.description }}
+{{- $image := site.Params.ogImage | default site.Params.portrait | absURL }}
+<meta name="description" content="{{ $desc }}">
 <meta name="theme-color" content="{{ site.Params.themeColor }}">
-<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} &middot; {{ site.Title }}{{ end }}</title>
+<title>{{ $title }}</title>
 <link rel="canonical" href="{{ .Permalink }}">
+
+{{/* Link previews in Messages, Discord, Slack, Mastodon and the rest. */}}
+<meta property="og:type" content="{{ cond .IsPage "article" "website" }}">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:image" content="{{ $image }}">
+
+{{- with .OutputFormats.Get "rss" }}
+<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .Permalink }}">
+{{- end }}
 <link rel="stylesheet" href="{{ "style.css" | relURL }}">

@@ -5,7 +5,7 @@
 	--ink: #b9b95f;
 	--ink-light: #d9d9a7;
 	--line: #cbc8be;
-	--accent: #d84b2f;
+	--accent: #ffa183;
 	--rollover: #c8f5c0;
 	--max-width: 1180px;
 }
@@ -129,7 +129,9 @@ h2 {
 	padding-right: 14px;
 	padding-left: 14px;
 	background: var(--rollover);
+	color: var(--paper);
 }
+
 
 .project h3 {
 	margin: 0;
@@ -139,6 +141,11 @@ h2 {
 	font-weight: 500;
 	line-height: 1;
 	letter-spacing: 0;
+}
+
+/* The hover fill is light, so every bit of card text has to invert with it. */
+.project:hover h3 {
+	color: var(--paper);
 }
 
 .project-description p {
@@ -163,8 +170,11 @@ h2 {
 
 .about-copy {
 	display: grid;
-	grid-template-columns: 120px minmax(0, 710px);
-	width: fit-content;
+	/* Both tracks are definite: the bio's width depends only on the viewport, never on
+	   the portrait. That keeps the portrait's size from feeding back into the text's
+	   line count, which is what the resize script below relies on. */
+	grid-template-columns: var(--portrait-size, clamp(104px, 11vw, 170px)) clamp(260px, 64vw, 710px);
+	justify-content: center;
 	margin: 0 auto;
 	gap: 40px;
 	align-items: center;
@@ -179,10 +189,23 @@ h2 {
 	letter-spacing: 0;
 }
 
-.portrait {
+/* The portrait is matched to the bio's height by the small script in home.html, which
+   sets --portrait-size. Sizing a square off a sibling's height has no reliable pure-CSS
+   form: every version depends on a grid track resolving its width from a row height that
+   isn't known yet, and engines disagree. The clamp() fallback above keeps the circle a
+   sensible fixed size when that script doesn't run. */
+.portrait-frame {
 	order: -1;
-	width: 112px;
+	position: relative;
+	width: 100%;
 	aspect-ratio: 1;
+}
+
+.portrait {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
 	object-fit: cover;
 	border-radius: 50%;
 	filter: contrast(1) saturate(0.85);
@@ -220,8 +243,9 @@ footer small {
 		min-height: 68px;
 	}
 
-	nav a:not(:last-child) {
-		display: none;
+	nav {
+		gap: 14px;
+		font-size: 11px;
 	}
 
 	.intro {
@@ -261,13 +285,12 @@ footer small {
 
 	.about-copy {
 		grid-template-columns: 1fr;
-		width: auto;
+		justify-content: start;
 		margin: 0;
 	}
 
-	.portrait {
-		width: 82px;
-		order: -1;
+	.portrait-frame {
+		width: 96px;
 	}
 
 	footer {
@@ -307,6 +330,16 @@ footer small {
 	margin: 0 0 24px;
 	font-family: "Fraunces", serif;
 	font-size: 20px;
+}
+
+.project-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 16px;
+	color: var(--ink-light);
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
 }
 
 .detail-meta {

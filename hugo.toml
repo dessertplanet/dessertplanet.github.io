@@ -8,7 +8,7 @@ enableRobotsTXT = true
 
 [params]
 	description = "Selected projects by Dune Desormeaux, a musician and creative technologist in Seattle."
-	themeColor = "#f3f0e8"
+	themeColor = "#344b3a"
 	tagline = "Sound, software & small machines."
 	portrait = "/images/portrait.jpg"
 	copyrightName = "Dune Dessertplanet"

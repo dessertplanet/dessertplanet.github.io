@@ -404,18 +404,30 @@ footer small {
 	text-decoration-color: var(--rollover);
 }
 
-/* Hugo's built-in youtube shortcode ships its own inline aspect-ratio box,
-   so only the outer spacing is set here. */
-.embed,
-.prose > div {
+/* Embeds are spaced by class, not by `.prose > div`, which caught every div a
+   body happened to hold. The bandcamp shortcode emits .embed itself; Hugo's
+   youtube shortcode does so when called with class="embed embed-video" (see
+   archetypes/default.md), and drops its own inline aspect-ratio box in favour of
+   the wrapper, which is why .embed-video supplies the ratio below. Called
+   without the class it still renders -- its inline box is self-contained -- it
+   just loses this margin. */
+.embed {
 	margin: 28px 0;
 }
 
-.embed-audio iframe {
+.embed iframe {
 	display: block;
 	width: 100%;
-	height: 120px;
 	border: 0;
+}
+
+.embed-audio iframe {
+	height: 120px;
+}
+
+.embed-video iframe {
+	height: auto;
+	aspect-ratio: 16 / 9;
 }
 
 .detail-links {

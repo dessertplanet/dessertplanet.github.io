@@ -1,7 +1,7 @@
 <footer>
 	<div class="socials">
 		{{- range site.Params.socials }}
-		<a href="{{ .url }}" target="_blank" rel="noreferrer">{{ .name }} &#8599;</a>
+		<a href="{{ .url }}" target="_blank" rel="noreferrer">{{ .name }} <span class="ext" aria-hidden="true">&#8599;&#xFE0E;</span></a>
 		{{- end }}
 	</div>
 	<small>&copy; {{ now.Year }} {{ site.Params.copyrightName }}</small>

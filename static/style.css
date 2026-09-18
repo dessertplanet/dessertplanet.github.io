@@ -14,16 +14,28 @@
 	box-sizing: border-box;
 }
 
+/* The background-color here is the one iOS paints the status-bar strip, the bottom
+   bar's backdrop and the overscroll bounce with -- it ignores the gradient for those,
+   since a gradient is a background-image and only covers the element's own box.
+   Leaving it unset means transparent, which those surfaces render as white: that was
+   the white banding on iPhone. This value is the no-JS floor; the inline script in
+   baseof.html overwrites it on scroll so it tracks the gradient instead of fighting
+   it. Paper green is the right floor because the page opens at the green end. */
 html {
 	scroll-behavior: smooth;
-	background: linear-gradient(to bottom, var(--paper), var(--paper-deep));
+	background-color: var(--paper);
+	background-image: linear-gradient(to bottom, var(--paper), var(--paper-deep));
+	background-repeat: no-repeat;
 }
 
 body {
 	position: relative;
 	min-height: 100vh;
+	min-height: 100dvh;
 	margin: 0;
-	background: linear-gradient(to bottom, var(--paper), var(--paper-deep));
+	background-color: var(--paper);
+	background-image: linear-gradient(to bottom, var(--paper), var(--paper-deep));
+	background-repeat: no-repeat;
 	color: var(--ink);
 	font-family: "Instrument Sans", sans-serif;
 	font-size: 14px;
@@ -72,6 +84,15 @@ a:focus-visible {
 	outline-offset: 4px;
 }
 
+/* U+2197 is missing from Instrument Sans, so iOS resolves it through font
+   fallback and lands on Apple Color Emoji -- the arrow shows up as a blue emoji
+   tile on iPhone. FE0E requests text presentation, and the stack names text
+   fonts that actually carry the glyph so fallback never reaches the emoji font. */
+.ext {
+	font-family: "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-variant-emoji: text;
+}
+
 .shell {
 	position: relative;
 	width: min(calc(100% - 48px), var(--max-width));
@@ -115,6 +136,7 @@ h1 {
 	font-weight: 500;
 	line-height: 0.9;
 	letter-spacing: 0;
+	overflow-wrap: break-word;
 }
 
 .section-heading {
@@ -265,7 +287,7 @@ footer small {
 	}
 
 	h1 {
-		font-size: clamp(52px, 16vw, 78px);
+		font-size: clamp(30px, 12vw, 78px);
 	}
 
 	.section-heading {

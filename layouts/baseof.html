@@ -12,10 +12,15 @@
 		{{ partial "footer.html" . }}
 	</div>
 
-	{{/* Chrome/Safari tint their UI chrome from the static theme-color meta tag, not
-	     from the page's gradient, so the overscroll bounce at the bottom flashes the
-	     old flat green instead of the mauve it's actually sitting on. Keep it in sync
-	     with scroll position. */}}
+	{{/* Two surfaces outside the document need a colour: the browser's UI chrome and
+	     the region iOS paints past the end of the page (the strip behind the status
+	     bar, the bottom bar's backdrop, the overscroll bounce). Chrome/Safari take the
+	     first from the theme-color meta; iOS takes the second from the root's
+	     background *colour*, ignoring the gradient, ignoring fixed attachment, and in
+	     practice ignoring theme-color too. Both are a single flat value, so a static
+	     colour is either green against the mauve footer or mauve against the green
+	     masthead. Drive both from scroll position instead, so whatever shows always
+	     matches the part of the gradient it sits next to. */}}
 	<script>
 	(function () {
 		var meta = document.querySelector('meta[name="theme-color"]');
@@ -38,14 +43,39 @@
 			return Math.round(a + (b - a) * t);
 		}
 
+		var last = "";
+
+		function apply(color) {
+			if (color === last) return;
+			last = color;
+
+			/* Only background-color. The gradients are background-images on a separate
+			   property and cover both boxes completely, so nothing inside the document
+			   changes -- these values are visible only outside it. Both elements are
+			   needed and they are not interchangeable: iOS paints the strip behind the
+			   status bar from the root, and the bottom bar's backdrop from the body.
+			   Setting only the root leaves a green slab under the footer; setting only
+			   the body leaves a mismatched strip up top. */
+			document.documentElement.style.backgroundColor = color;
+			document.body.style.backgroundColor = color;
+
+			meta.setAttribute("content", color);
+		}
+
+		/* No frame throttle: the channels are rounded to integers, so `apply` early-returns
+		   on all but the few dozen scroll positions where the colour actually changes. */
 		function update() {
 			var max = document.documentElement.scrollHeight - window.innerHeight;
 			var t = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-			var rgb = [mix(top[0], bottom[0], t), mix(top[1], bottom[1], t), mix(top[2], bottom[2], t)];
-			meta.setAttribute("content", "rgb(" + rgb.join(",") + ")");
+			apply("rgb(" + [
+				mix(top[0], bottom[0], t),
+				mix(top[1], bottom[1], t),
+				mix(top[2], bottom[2], t)
+			].join(",") + ")");
 		}
 
 		document.addEventListener("scroll", update, { passive: true });
+		window.addEventListener("scrollend", update);
 		window.addEventListener("resize", update);
 		update();
 	})();

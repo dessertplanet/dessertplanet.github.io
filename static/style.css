@@ -93,6 +93,72 @@ a:focus-visible {
 	font-variant-emoji: text;
 }
 
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/* Shown only inside the narrow-viewport block below, and only once the header
+   script has marked itself enhanced. */
+.menu-toggle {
+	display: none;
+	align-items: center;
+	padding: 10px 0 10px 10px;
+	border: 0;
+	background: none;
+	color: var(--mint);
+	cursor: pointer;
+}
+
+.menu-toggle:focus-visible {
+	outline: 2px solid var(--rollover);
+	outline-offset: 4px;
+}
+
+/* Three bars from one element: the middle is the span, the outer two are its
+   pseudo-elements. Open, the middle fades and the outer two cross. */
+.menu-bars,
+.menu-bars::before,
+.menu-bars::after {
+	display: block;
+	width: 22px;
+	height: 1.5px;
+	background: currentColor;
+	transition: transform 180ms ease, background-color 120ms ease;
+}
+
+.menu-bars::before,
+.menu-bars::after {
+	content: "";
+	position: relative;
+}
+
+.menu-bars::before {
+	top: -7px;
+}
+
+.menu-bars::after {
+	top: 5.5px;
+}
+
+[aria-expanded="true"] .menu-bars {
+	background: transparent;
+}
+
+[aria-expanded="true"] .menu-bars::before {
+	transform: translateY(7px) rotate(45deg);
+}
+
+[aria-expanded="true"] .menu-bars::after {
+	transform: translateY(-5.5px) rotate(-45deg);
+}
+
 .shell {
 	position: relative;
 	width: min(calc(100% - 48px), var(--max-width));
@@ -342,7 +408,11 @@ footer small {
 	}
 
 	.project,
-	.arrow {
+	.arrow,
+	.detail-links a,
+	.menu-bars,
+	.menu-bars::before,
+	.menu-bars::after {
 		transition: none;
 	}
 }
@@ -351,6 +421,23 @@ footer small {
 .detail {
 	padding-bottom: 100px;
 	border-bottom: 1px solid var(--ink);
+}
+
+/* The rule under the header block sits here rather than on .prose, which is
+   capped at a reading measure -- on .prose it drew a 62ch rule under a
+   full-width header. Here it also survives a page with no tags and no links. */
+.detail-head {
+	border-bottom: 1px solid var(--ink);
+}
+
+/* Tags ride alongside the title, sharing its baseline, and drop onto their own
+   line only when the flex row runs out of width -- which it does on a phone, or
+   under a long title. */
+.detail .section-heading {
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	gap: 4px 18px;
+	padding-top: 18px;
 }
 
 .detail h1 {
@@ -378,11 +465,6 @@ footer small {
 	font-size: 11px;
 	text-transform: uppercase;
 	letter-spacing: 0.04em;
-}
-
-.detail-meta {
-	padding-bottom: 28px;
-	border-bottom: 1px solid var(--ink);
 }
 
 .prose {
@@ -433,26 +515,83 @@ footer small {
 .detail-links {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 12px 24px;
-	padding: 24px 0;
-	border-top: 1px solid var(--ink);
+	gap: 10px;
+	padding-bottom: 32px;
+}
+
+.detail-links a {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 9px 18px;
+	border: 1px solid var(--ink);
+	border-radius: 999px;
 	color: var(--mint);
 	font-size: 11px;
 	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	transition: color 180ms ease, border-color 180ms ease;
 }
 
 .detail-links a:hover {
+	border-color: var(--rollover);
 	color: var(--rollover);
 }
 
+/* Above the title, so the way out is the first thing in the article rather than
+   something to scroll for. It carries the space the heading used to own; the
+   heading's own top padding shrinks to match on detail pages. No font-size or
+   transform: it inherits the body size, which is what the nav links run at. */
 .back {
 	display: inline-block;
-	padding-top: 24px;
+	padding-top: 48px;
 	color: var(--mint);
-	font-size: 11px;
-	text-transform: uppercase;
 }
 
 .back:hover {
 	color: var(--rollover);
+}
+
+/* --- Narrow viewports: nav collapses behind a toggle --- */
+
+/* 480px rather than the 380px where the row actually breaks, so every phone
+   gets the same header instead of the 390px-wide ones keeping a cramped row
+   while the 375px-wide ones wrap. Everything here is scoped to .nav-enhanced,
+   which only the header script adds -- without it the wrapping row survives. */
+@media (max-width: 480px) {
+	.nav-enhanced {
+		flex-wrap: wrap;
+	}
+
+	.nav-enhanced .menu-toggle {
+		display: inline-flex;
+	}
+
+	.nav-enhanced .wordmark,
+	.nav-enhanced .menu-toggle {
+		display: inline-flex;
+		align-items: center;
+		min-height: 67px;
+	}
+
+	/* In flow rather than floated over the page: the header does not stick, so
+	   an open menu can simply push the article down and skip the questions of
+	   z-index and of matching a background to a moving gradient. */
+	.nav-enhanced nav {
+		display: none;
+		flex-basis: 100%;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0;
+		padding-bottom: 10px;
+		font-size: 14px;
+	}
+
+	.nav-enhanced .menu-toggle[aria-expanded="true"] + nav {
+		display: flex;
+	}
+
+	.nav-enhanced nav a {
+		padding: 11px 0;
+	}
 }

@@ -12,6 +12,29 @@
 		{{ partial "footer.html" . }}
 	</div>
 
+	{{/* Shown only once the first project has scrolled off the top, so it never
+	     covers anything while the page is still near the start. A plain anchor:
+	     the jump works without the script, and html's scroll-behavior makes it
+	     a smooth one. */}}
+	<a class="pill to-top" href="#top"><span aria-hidden="true">&#8593;&#xFE0E;</span> Top</a>
+
+	<script>
+	(function () {
+		var button = document.querySelector(".to-top");
+		var first = document.querySelector(".project");
+		if (!button || !first || !("IntersectionObserver" in window)) return;
+
+		/* Watching the first card rather than a scroll offset: it reports its own
+		   position, so nothing here has to know the height of the masthead or of
+		   the intro above it, and none of that has to stay in sync with the CSS. */
+		new IntersectionObserver(function (entries) {
+			var entry = entries[entries.length - 1];
+			var scrolledPast = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+			button.classList.toggle("is-visible", scrolledPast);
+		}, { threshold: 0 }).observe(first);
+	})();
+	</script>
+
 	{{/* Two surfaces outside the document need a colour: the browser's UI chrome and
 	     the region iOS paints past the end of the page (the strip behind the status
 	     bar, the bottom bar's backdrop, the overscroll bounce). Chrome/Safari take the

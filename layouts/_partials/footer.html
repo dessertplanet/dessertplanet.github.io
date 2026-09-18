@@ -4,5 +4,13 @@
 		<a href="{{ .url }}" target="_blank" rel="noreferrer">{{ .name }} <span class="ext" aria-hidden="true">&#8599;&#xFE0E;</span></a>
 		{{- end }}
 	</div>
+	{{- with site.Menus.actions }}
+	<div class="footer-actions">
+		{{- range . }}
+		<a class="pill" href="{{ .URL }}">{{ .Name }}</a>
+		{{- end }}
+	</div>
+	{{- end }}
+
 	<small>&copy; {{ now.Year }} {{ site.Params.copyrightName }}</small>
 </footer>

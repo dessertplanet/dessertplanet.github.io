@@ -18,7 +18,7 @@
 			{{- with .Params.links }}
 			<div class="detail-links">
 				{{- range . }}
-				<a href="{{ .url }}" target="_blank" rel="noreferrer">{{ .name }} <span class="ext" aria-hidden="true">&#8599;&#xFE0E;</span></a>
+				<a class="pill" href="{{ .url }}" target="_blank" rel="noreferrer">{{ .name }} <span class="ext" aria-hidden="true">&#8599;&#xFE0E;</span></a>
 				{{- end }}
 			</div>
 			{{- end }}

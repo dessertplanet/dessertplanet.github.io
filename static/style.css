@@ -42,14 +42,16 @@ body {
 	line-height: 1.55;
 }
 
-/* Decorative only: the planet artwork lives at the bottom of the page as part of
-   the gradient, not as a portrait. Sized in vw so it scales with the viewport. The
-   wrapper is exactly body-width (never wider), so its own overflow:hidden clips the
-   circle's horizontal bleed locally instead of touching body/html overflow, which
-   would otherwise pin the page's scrollable height to the viewport. The circle's own
-   mask fades its edge to nothing so what remains blends into the gradient. */
+/* Decorative only: the planet artwork rides the bottom of the viewport as part of
+   the gradient, not as a portrait. Sized in vw so it scales with the viewport. Fixed
+   rather than pinned to the end of the document: as the project list grows the page
+   gets long, and an absolute one would sit far below the fold, visible only once you
+   reached the very bottom. Fixed also takes it out of flow entirely, so it can no
+   longer affect the page's scrollable height -- the overflow:hidden here now only
+   clips the circle's horizontal bleed. The circle's own mask fades its edge to
+   nothing so what remains blends into the gradient. */
 .planet-decor {
-	position: absolute;
+	position: fixed;
 	left: 0;
 	right: 0;
 	bottom: 0;
@@ -88,7 +90,8 @@ a:focus-visible {
    fallback and lands on Apple Color Emoji -- the arrow shows up as a blue emoji
    tile on iPhone. FE0E requests text presentation, and the stack names text
    fonts that actually carry the glyph so fallback never reaches the emoji font. */
-.ext {
+.ext,
+.to-top span {
 	font-family: "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-variant-emoji: text;
 }
@@ -169,6 +172,7 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	gap: 16px;
 	min-height: 82px;
 	border-bottom: 1px solid var(--ink);
 }
@@ -185,7 +189,8 @@ nav {
 }
 
 nav a:hover,
-.socials a:hover {
+.socials a:hover,
+.about-copy a:hover {
 	color: var(--rollover);
 }
 
@@ -301,6 +306,12 @@ h2 {
 	border-bottom: 1px solid var(--ink);
 }
 
+/* Deliberately not a link -- one class, no `a`, so it stays below the
+   .about-copy a:hover rule's specificity and never competes with it. */
+.about-copy .name {
+	color: var(--ink-light);
+}
+
 .about-copy p {
 	margin: 0 0 20px 0;
 	text-align: left;
@@ -313,10 +324,16 @@ h2 {
 
 footer {
 	display: grid;
-	grid-template-columns: 1fr auto;
+	grid-template-columns: 1fr auto auto;
 	gap: 24px;
-	align-items: end;
+	align-items: center;
 	padding: 36px 0 52px;
+}
+
+.footer-actions {
+	display: flex;
+	gap: 10px;
+	padding-right: 8px;
 }
 
 .socials {
@@ -409,7 +426,7 @@ footer small {
 
 	.project,
 	.arrow,
-	.detail-links a,
+	.pill,
 	.menu-bars,
 	.menu-bars::before,
 	.menu-bars::after {
@@ -421,6 +438,18 @@ footer small {
 .detail {
 	padding-bottom: 100px;
 	border-bottom: 1px solid var(--ink);
+}
+
+/* The 404 has no body copy: .detail's allowance for it reads as a gap, and the
+   rule that would divide header from body lands just above .detail's own,
+   making a thin empty strip. Keep the outer rule, which every page has above
+   the footer, and drop the inner one. */
+.detail-404 {
+	padding-bottom: 56px;
+}
+
+.detail-404 .detail-head {
+	border-bottom: none;
 }
 
 /* The rule under the header block sits here rather than on .prose, which is
@@ -520,7 +549,8 @@ footer small {
 	padding-bottom: 32px;
 }
 
-.detail-links a {
+/* Shared by the project links and the header's action buttons. */
+.pill {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
@@ -531,12 +561,13 @@ footer small {
 	font-size: 11px;
 	text-transform: uppercase;
 	letter-spacing: 0.04em;
+	white-space: nowrap;
 	transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
 }
 
 /* Same inversion the project tiles use: the pill fills with mint and its text
    flips to the page's own green. */
-.detail-links a:hover {
+.pill:hover {
 	border-color: var(--mint);
 	background: var(--mint);
 	color: var(--paper);
@@ -556,19 +587,19 @@ footer small {
 	color: var(--rollover);
 }
 
-/* --- Narrow viewports: nav collapses, footer links stack --- */
+/* --- Narrow viewports: nav collapses, pills and footer links stack --- */
 
-/* 480px rather than the 380px where the row actually breaks, so every phone
-   gets the same header instead of the 390px-wide ones keeping a cramped row
-   while the 375px-wide ones wrap. Everything here is scoped to .nav-enhanced,
-   which only the header script adds -- without it the wrapping row survives. */
-@media (max-width: 480px) {
-	.nav-enhanced {
+/* Two thresholds, because two different things run out of room.
+   The full row measures 604px (110 wordmark + 334 of link text + 96 of
+   gaps + 48 of gutters), below which the wordmark runs into the first link and
+   every link breaks its arrow onto a second line. 640 gives that a
+   little cushion. Another nav link pushes this number up -- re-measure rather
+   than assuming it still fits. Everything here is scoped to
+   .nav-enhanced, which only the header script adds; without it the plain
+   wrapping row survives. */
+@media (max-width: 640px) {
+	header {
 		flex-wrap: wrap;
-	}
-
-	.nav-enhanced .menu-toggle {
-		display: inline-flex;
 	}
 
 	.nav-enhanced .wordmark,
@@ -583,6 +614,7 @@ footer small {
 	   z-index and of matching a background to a moving gradient. */
 	.nav-enhanced nav {
 		display: none;
+		order: 2;
 		flex-basis: 100%;
 		flex-direction: column;
 		align-items: flex-end;
@@ -598,11 +630,12 @@ footer small {
 	.nav-enhanced nav a {
 		padding: 11px 0;
 	}
+}
 
-	/* One per line rather than a wrapping row: wrapped, the four names divide
-	   unevenly and leave the last one stranded on its own line, which reads as
-	   a mistake rather than a second row. Stacked they also get a tap target
-	   the size of the ones in the nav panel. */
+/* Footer links: one per line rather than a wrapping row, where the names
+   divide unevenly and strand the last one on a line of its own. Stacked they
+   also get a tap target the size of the ones in the nav panel. */
+@media (max-width: 480px) {
 	.socials {
 		flex-direction: column;
 		gap: 0;
@@ -610,5 +643,53 @@ footer small {
 
 	.socials a {
 		padding: 9px 0;
+	}
+}
+
+/* --- Back to top --- */
+
+/* Bottom left, because the planet now sits fixed at the bottom right. Filled
+   rather than outlined like the other pills: it floats over whatever happens to
+   be behind it -- gradient, body copy, artwork -- so it needs to carry its own
+   contrast. Hidden until the script marks it visible; with no script it simply
+   never appears, and the footer links still reach everything. */
+.to-top {
+	position: fixed;
+	left: 24px;
+	bottom: 24px;
+	z-index: 2;
+	border-color: var(--mint);
+	background: var(--mint);
+	color: var(--paper);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(6px);
+	transition: opacity 180ms ease, transform 180ms ease, visibility 180ms, background-color 180ms ease, border-color 180ms ease;
+}
+
+.to-top.is-visible {
+	opacity: 1;
+	visibility: visible;
+	transform: none;
+}
+
+.to-top:hover {
+	border-color: var(--rollover);
+	background: var(--rollover);
+	color: var(--paper);
+}
+
+@media (max-width: 480px) {
+	.to-top {
+		left: 16px;
+		bottom: 16px;
+	}
+}
+
+/* Appended after .to-top's own transition, which would otherwise win on source
+   order over the .pill entry in the earlier reduced-motion block. */
+@media (prefers-reduced-motion: reduce) {
+	.to-top {
+		transition: none;
 	}
 }

@@ -11,7 +11,7 @@ enableRobotsTXT = true
 	themeColor = "#344b3a"
 	tagline = "Sound, software & experimentation"
 	portrait = "/images/portrait.jpg"
-	copyrightName = "Dune Dessertplanet"
+	copyrightName = "Dune Desormeaux"
 
 [[params.socials]]
 	name = "GitHub"
@@ -66,6 +66,13 @@ enableRobotsTXT = true
 [outputs]
 	home = ["html"]
 	section = ["html"]
+
+# Rendered as a pill in the footer, left of the copyright line.
+# /roadmap/ is not built yet, so it 404s for now.
+[[menu.actions]]
+	name = "Dessert menu"
+	url = "/roadmap/"
+	weight = 1
 
 [markup.goldmark.renderer]
 	unsafe = true

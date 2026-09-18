@@ -6,7 +6,13 @@
 <meta name="description" content="{{ $desc }}">
 <meta name="theme-color" content="{{ site.Params.themeColor }}">
 <title>{{ $title }}</title>
+{{- if eq .Kind "404" }}
+{{/* Nothing here to index, and no canonical: the page stands in for whatever
+     URL was missed, not for /404.html. */}}
+<meta name="robots" content="noindex">
+{{- else }}
 <link rel="canonical" href="{{ .Permalink }}">
+{{- end }}
 
 {{/* Link previews in Messages, Discord, Slack, Mastodon and the rest. */}}
 <meta property="og:type" content="{{ cond .IsPage "article" "website" }}">

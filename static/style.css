@@ -552,7 +552,7 @@ footer small {
 	color: var(--rollover);
 }
 
-/* --- Narrow viewports: nav collapses behind a toggle --- */
+/* --- Narrow viewports: nav collapses, footer links stack --- */
 
 /* 480px rather than the 380px where the row actually breaks, so every phone
    gets the same header instead of the 390px-wide ones keeping a cramped row
@@ -581,7 +581,7 @@ footer small {
 		display: none;
 		flex-basis: 100%;
 		flex-direction: column;
-		align-items: flex-start;
+		align-items: flex-end;
 		gap: 0;
 		padding-bottom: 10px;
 		font-size: 14px;
@@ -593,5 +593,18 @@ footer small {
 
 	.nav-enhanced nav a {
 		padding: 11px 0;
+	}
+
+	/* One per line rather than a wrapping row: wrapped, the four names divide
+	   unevenly and leave the last one stranded on its own line, which reads as
+	   a mistake rather than a second row. Stacked they also get a tap target
+	   the size of the ones in the nav panel. */
+	.socials {
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.socials a {
+		padding: 9px 0;
 	}
 }

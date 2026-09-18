@@ -26,12 +26,20 @@
 
 		/* Watching the first card rather than a scroll offset: it reports its own
 		   position, so nothing here has to know the height of the masthead or of
-		   the intro above it, and none of that has to stay in sync with the CSS. */
+		   the intro above it, and none of that has to stay in sync with the CSS.
+
+		   The rootMargin shrinks the observed area to a strip along the top of the
+		   viewport. A plain threshold-0 observer only reports the card entering and
+		   leaving the viewport as a whole, which would mean waiting for its bottom
+		   edge; against this strip the callback fires as its top edge arrives, which
+		   is the moment we want. Two conditions, because the card touches the strip
+		   on the way past and is clear of it afterwards: intersecting means the top
+		   edge is crossing right now, a negative top means it is already above. */
 		new IntersectionObserver(function (entries) {
 			var entry = entries[entries.length - 1];
-			var scrolledPast = !entry.isIntersecting && entry.boundingClientRect.top < 0;
-			button.classList.toggle("is-visible", scrolledPast);
-		}, { threshold: 0 }).observe(first);
+			var pastTop = entry.isIntersecting || entry.boundingClientRect.top < 0;
+			button.classList.toggle("is-visible", pastTop);
+		}, { threshold: 0, rootMargin: "0px 0px -99% 0px" }).observe(first);
 	})();
 	</script>
 

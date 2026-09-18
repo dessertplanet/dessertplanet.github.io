@@ -648,14 +648,14 @@ footer small {
 
 /* --- Back to top --- */
 
-/* Bottom left, because the planet now sits fixed at the bottom right. Filled
-   rather than outlined like the other pills: it floats over whatever happens to
-   be behind it -- gradient, body copy, artwork -- so it needs to carry its own
-   contrast. Hidden until the script marks it visible; with no script it simply
-   never appears, and the footer links still reach everything. */
+/* Filled rather than outlined like the other pills: it floats over whatever
+   happens to be behind it -- gradient, body copy, and at the bottom right the
+   planet artwork -- so it needs to carry its own contrast. Hidden until the
+   script marks it visible; with no script it simply never appears, and the
+   footer links still reach everything. */
 .to-top {
 	position: fixed;
-	left: 24px;
+	right: 24px;
 	bottom: 24px;
 	z-index: 2;
 	border-color: var(--mint);
@@ -681,7 +681,7 @@ footer small {
 
 @media (max-width: 480px) {
 	.to-top {
-		left: 16px;
+		right: 16px;
 		bottom: 16px;
 	}
 }

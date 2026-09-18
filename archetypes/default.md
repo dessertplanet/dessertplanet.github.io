@@ -1,6 +1,5 @@
 ---
 title: "{{ replace .File.ContentBaseName `-` ` ` | title }}"
-number: ""
 weight: 99
 summary: ""
 tags: []

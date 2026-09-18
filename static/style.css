@@ -470,6 +470,7 @@ footer small {
 .prose {
 	max-width: 62ch;
 	padding: 28px 0;
+	color: var(--ink-light);
 }
 
 .prose p {
@@ -526,16 +527,19 @@ footer small {
 	padding: 9px 18px;
 	border: 1px solid var(--ink);
 	border-radius: 999px;
-	color: var(--mint);
+	color: var(--ink-light);
 	font-size: 11px;
 	text-transform: uppercase;
 	letter-spacing: 0.04em;
-	transition: color 180ms ease, border-color 180ms ease;
+	transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
 }
 
+/* Same inversion the project tiles use: the pill fills with mint and its text
+   flips to the page's own green. */
 .detail-links a:hover {
-	border-color: var(--rollover);
-	color: var(--rollover);
+	border-color: var(--mint);
+	background: var(--mint);
+	color: var(--paper);
 }
 
 /* Above the title, so the way out is the first thing in the article rather than

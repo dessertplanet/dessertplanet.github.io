@@ -25,6 +25,9 @@ enableRobotsTXT = true
 [[params.socials]]
 	name = "llllllll"
 	url = "https://llllllll.co/u/dessertplanet/summary"
+[[params.socials]]
+	name = "LinkedIn"
+	url = "https://linkedin.com/in/duned"
 
 [[menu.main]]
 	name = "GitHub"
@@ -48,6 +51,12 @@ enableRobotsTXT = true
 	name = "llllllll"
 	url = "https://llllllll.co/u/dessertplanet/summary"
 	weight = 4
+	[menu.main.params]
+		external = true
+[[menu.main]]
+	name = "LinkedIn"
+	url = "https://linkedin.com/in/duned"	
+	weight = 5
 	[menu.main.params]
 		external = true
 

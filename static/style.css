@@ -895,6 +895,19 @@ footer small {
 	color: var(--paper);
 }
 
+/* Below this the footer stacks, which puts Dessert menu on a row of its own with
+   only the copyright beneath it -- so there is a pill to line up with again, the
+   way the wide rule lines up with the footer row. 93px is what sits between that
+   row's bottom edge and the end of the document: the footer's 52px of bottom
+   padding, the 17px copyright line, and the 24px grid gap between them. The
+   button is far enough right that being level with the pill is not a collision.
+   Tracks those three values; change any and change this. */
+@media (max-width: 760px) {
+	.to-top {
+		bottom: 93px;
+	}
+}
+
 @media (max-width: 480px) {
 	.to-top {
 		right: 16px;

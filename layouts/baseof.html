@@ -74,17 +74,20 @@
 
 		var reset;
 
-		function show(paths, message) {
+		/* Always clears the status: a successful copy says so with the checkmark
+		   alone, and this is what wipes the fallback's instruction if a later click
+		   succeeds where an earlier one could not. */
+		function show(paths) {
 			glyph.innerHTML = paths;
-			status.textContent = message;
+			status.textContent = "";
 			button.classList.toggle("is-copied", paths === DONE);
 		}
 
-		function settle(message) {
-			show(DONE, message);
+		function settle() {
+			show(DONE);
 			clearTimeout(reset);
 			reset = setTimeout(function () {
-				show(COPY, "");
+				show(COPY);
 			}, 2400);
 		}
 
@@ -108,7 +111,7 @@
 			if (!navigator.clipboard) return select();
 
 			navigator.clipboard.writeText(address).then(function () {
-				settle("Copied");
+				settle();
 			}, select);
 		});
 	})();

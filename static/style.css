@@ -257,14 +257,25 @@ h2 {
 	align-items: center;
 	min-height: 146px;
 	border-bottom: 1px solid var(--ink);
-	transition: background-color 180ms ease, padding 180ms ease;
+	transition: background-color 180ms ease, padding 180ms ease, margin 180ms ease;
 }
 
 .project:last-child {
 	border-bottom: none;
 }
 
+/* The fill grows outward rather than the text inward. The padding is what puts
+   air between the text and the edge of the mint field, but on a border-box grid
+   it comes out of the content box, narrowing the columns and rewrapping the
+   description mid-hover. An equal negative margin gives that width back: the
+   content box is the container's width plus 28px of margin less 28px of padding
+   at every point in the transition, so it never changes and nothing reflows,
+   while the field itself reaches 14px into the page gutter. The gutter is 24px
+   at every width this rule applies to, so the bleed never reaches the viewport
+   edge or opens a horizontal scrollbar. */
 .project:hover {
+	margin-right: -14px;
+	margin-left: -14px;
 	padding-right: 14px;
 	padding-left: 14px;
 	background: var(--mint);
@@ -367,10 +378,11 @@ h2 {
 	flex: none;
 }
 
-/* Set in the meta treatment used for the project tags rather than the paragraph's
-   20px Fraunces: at full size the confirmation competes with the address it is
-   confirming, and it is wide enough at 20px to force a wrap on a phone. Empty
-   until a copy lands, so it costs no width the rest of the time. */
+/* Only ever carries the fallback's "press cmd-C" instruction -- a successful copy
+   is reported by the checkmark alone. Set in the meta treatment used for the
+   project tags rather than the paragraph's 20px Fraunces, which at that size
+   competes with the address beside it and is wide enough to force a wrap on a
+   phone. Empty the rest of the time, so it costs no width. */
 .copy-status {
 	margin-left: 10px;
 	color: var(--rollover);
@@ -462,7 +474,10 @@ footer small {
 		padding: 25px 0;
 	}
 
+	/* Same trick as the desktop rule, against this breakpoint's 16px gutter. */
 	.project:hover {
+		margin-right: -8px;
+		margin-left: -8px;
 		padding: 25px 8px;
 	}
 

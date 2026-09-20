@@ -12,34 +12,46 @@
 		{{ partial "footer.html" . }}
 	</div>
 
-	{{/* Shown only once the first project has scrolled off the top, so it never
-	     covers anything while the page is still near the start. A plain anchor:
-	     the jump works without the script, and html's scroll-behavior makes it
-	     a smooth one. */}}
+	{{/* Shown only once the block at the top of the page has scrolled away, so it
+	     never covers anything while the page is still near the start. A plain
+	     anchor: the jump works without the script, and html's scroll-behavior
+	     makes it a smooth one. Nothing carries id="top" on purpose -- the fragment
+	     is defined to mean the top of the document when nothing matches it, and an
+	     id on <main> lands below the masthead with the nav off screen. */}}
 	<a class="pill to-top" href="#top"><span aria-hidden="true">&#8593;&#xFE0E;</span> Top</a>
 
 	<script>
 	(function () {
 		var button = document.querySelector(".to-top");
-		var first = document.querySelector(".project");
-		if (!button || !first || !("IntersectionObserver" in window)) return;
+		/* One sentinel per page shape, and only one of the two is ever present:
+		   .detail-head is a project page's front matter -- title, tags, links,
+		   facts -- and .about is the home page's closing blurb, which the project
+		   list follows directly. Each is the block standing between the reader and
+		   what they came for, so each one's bottom edge is the right threshold. */
+		var sentinel = document.querySelector(".detail-head, .about");
+		if (!button || !sentinel || !("IntersectionObserver" in window)) return;
 
-		/* Watching the first card rather than a scroll offset: it reports its own
-		   position, so nothing here has to know the height of the masthead or of
-		   the intro above it, and none of that has to stay in sync with the CSS.
+		/* Watching a block rather than a scroll offset: it reports its own position,
+		   so nothing here has to know the height of the masthead above it, and none
+		   of that has to stay in sync with the CSS. The button appears once that
+		   block's bottom edge has passed the top of the viewport -- on the home page
+		   that edge is exactly where the first card starts, since the project list
+		   follows .about directly.
 
-		   The rootMargin shrinks the observed area to a strip along the top of the
-		   viewport. A plain threshold-0 observer only reports the card entering and
-		   leaving the viewport as a whole, which would mean waiting for its bottom
-		   edge; against this strip the callback fires as its top edge arrives, which
-		   is the moment we want. Two conditions, because the card touches the strip
-		   on the way past and is clear of it afterwards: intersecting means the top
-		   edge is crossing right now, a negative top means it is already above. */
+		   That is a plain "has it left the viewport" question, which is what a
+		   threshold-0 observer reports on its own, so no rootMargin is needed to
+		   reshape the observed area: the callback fires as the bottom edge crosses,
+		   and boundingClientRect distinguishes leaving past the top from leaving
+		   past the bottom, which cannot happen here but costs nothing to be exact
+		   about.
+
+		   A page with too little content to scroll never pushes its sentinel past
+		   the top, so the button stays off pages with no use for it without
+		   anything here measuring a height. */
 		new IntersectionObserver(function (entries) {
 			var entry = entries[entries.length - 1];
-			var pastTop = entry.isIntersecting || entry.boundingClientRect.top < 0;
-			button.classList.toggle("is-visible", pastTop);
-		}, { threshold: 0, rootMargin: "0px 0px -99% 0px" }).observe(first);
+			button.classList.toggle("is-visible", entry.boundingClientRect.bottom <= 0);
+		}, { threshold: 0 }).observe(sentinel);
 	})();
 	</script>
 

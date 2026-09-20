@@ -560,14 +560,22 @@ footer small {
 	letter-spacing: 0.04em;
 }
 
+/* Body copy runs larger than the 14px the rest of the site uses for labels, nav
+   and card text: those are scanned, this is read. The cap stays a measure rather
+   than a pixel width, so it tracks the font size -- 62ch resolves to ~700px here,
+   which keeps lines at ~64 characters and settles the column just inside the
+   58ch lede above it. Widening the cap instead of the type would have pushed
+   past 75 characters a line, which reads worse, not better. */
 .prose {
 	max-width: 62ch;
 	padding: 28px 0;
 	color: var(--ink-light);
+	font-size: 17px;
+	line-height: 1.6;
 }
 
 .prose p {
-	margin: 0 0 16px;
+	margin: 0 0 18px;
 }
 
 .prose a {

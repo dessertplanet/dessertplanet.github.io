@@ -2,6 +2,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {{- $title := cond .IsHome site.Title (printf "%s · %s" .Title site.Title) }}
 {{- $desc := .Description | default .Params.summary | default site.Params.description }}
+{{/* Deliberately the portrait for every page, projects included: a lead image is
+     chosen to open a project page, not to be cropped to 1200x630 in someone's
+     Discord. The lead is available here as .Params.lead if that ever changes. */}}
 {{- $image := site.Params.ogImage | default site.Params.portrait | absURL }}
 <meta name="description" content="{{ $desc }}">
 <meta name="theme-color" content="{{ site.Params.themeColor }}">

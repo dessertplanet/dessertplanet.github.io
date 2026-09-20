@@ -1,0 +1,84 @@
+{{/* The lead slot: the one image or video that represents a project, rendered
+     between the header block and the body.
+
+     It lives in front matter rather than in the markdown body because it is
+     metadata, not prose -- which is what lets head.html reuse it as the page's
+     og:image, and what keeps its position identical on every project rather
+     than a per-page decision. It also sits outside .prose, so it is free of the
+     62ch reading measure that the body is capped at.
+
+     Two shapes, one field:
+
+       lead:
+         image: shot.jpg        # a file beside index.md in the page bundle
+         alt: "..."             # required: this is content, not decoration
+         caption: "..."         # optional
+       lead:
+         video: dQw4w9WgXcQ     # a YouTube id
+         caption: "..."         # optional
+*/}}
+{{- with .Params.lead -}}
+{{- $page := $.Page -}}
+{{- $caption := .caption -}}
+
+{{- if and .image .video -}}
+	{{- errorf "lead: %s sets both image and video -- a project leads with one thing or the other" $page.File.Path -}}
+{{- end -}}
+
+{{- with .video -}}
+<figure class="lead lead-video">
+	{{/* nocookie so an embed does not set advertising cookies on a page that has
+	     no other reason to ask about them. */}}
+	<iframe
+		src="https://www.youtube-nocookie.com/embed/{{ . }}"
+		title="{{ $caption | default (printf "%s video" $page.Title) }}"
+		loading="lazy" allowfullscreen
+		allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+	{{- with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+</figure>
+{{- end -}}
+
+{{- with .image -}}
+{{- $img := $page.Resources.GetMatch . -}}
+{{/* errorf logs and fails the build, but it does not stop this template, so the
+     rendering below sits in the else branch -- left to run against a nil resource
+     it raises a second, uglier nil-pointer error that buries the readable one. */}}
+{{- if not $img -}}
+	{{- errorf "lead.image %q not found for %s -- a lead image has to sit beside its index.md, so this page needs to be a leaf bundle: move it to content/projects/<name>/index.md and put the file in that folder" . $page.File.Path -}}
+{{- else -}}
+
+{{/* Candidate widths for the srcset, capped at the source's own width so a small
+     screenshot is never upscaled into a bigger, blurrier file. The source width
+     itself is always a candidate: without it an image narrower than the next step
+     up (the 972px screenshot against a 1180px step) would only ever be served at
+     640 and never at its full resolution. */}}
+{{- $widths := slice -}}
+{{- range (slice 640 960 1180 1770 2360) -}}
+	{{- if lt . $img.Width -}}{{- $widths = $widths | append . -}}{{- end -}}
+{{- end -}}
+{{- $widths = $widths | append $img.Width -}}
+
+{{- $srcset := slice -}}
+{{- range $widths -}}
+	{{- $r := $img.Resize (printf "%dx webp q82" .) -}}
+	{{- $srcset = $srcset | append (printf "%s %dw" $r.RelPermalink .) -}}
+{{- end -}}
+{{- $fallback := $img.Resize (printf "%dx jpg q82" $img.Width) -}}
+
+<figure class="lead lead-image">
+	{{/* width/height are the source's real pixels: the browser derives the aspect
+	     ratio from them and reserves the space before the file lands, so the body
+	     copy below does not jump as it loads. */}}
+	<img
+		src="{{ $fallback.RelPermalink }}"
+		srcset="{{ delimit $srcset ", " }}"
+		sizes="(max-width: 1228px) calc(100vw - 48px), 1180px"
+		width="{{ $img.Width }}" height="{{ $img.Height }}"
+		alt="{{ $.Params.lead.alt | default "" }}"
+		loading="lazy" decoding="async">
+	{{- with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+</figure>
+{{- end -}}
+{{- end -}}
+
+{{- end -}}

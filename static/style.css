@@ -560,6 +560,50 @@ footer small {
 	letter-spacing: 0.04em;
 }
 
+/* The lead image or video, rendered by _partials/lead.html between the header
+   block and the body. It spans the full shell rather than the body's reading
+   measure -- that cap exists to keep lines short, which is not a constraint a
+   picture shares. */
+.lead {
+	margin: 0;
+	padding: 28px 0 0;
+}
+
+/* Two caps, not one. A wide screenshot is limited by the shell, but the same
+   rule on a tall one gives a 1180px-wide portrait over 1200px tall, which buries
+   the body copy below a full screen of image. The height cap is what actually
+   binds there, and `width: auto` lets the image narrow to keep its ratio -- the
+   width/height attributes in the partial still supply that ratio up front, so
+   neither cap costs the reserved space. */
+.lead img {
+	display: block;
+	max-width: 100%;
+	max-height: 76vh;
+	width: auto;
+	height: auto;
+	/* Left, not centred. A wide image fills the shell and the question never comes
+	   up, but a tall one is narrowed by the height cap, and centring it then floats
+	   it off the left margin that the title, lede, pills and body all share. */
+	margin: 0;
+}
+
+.lead-video iframe {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16 / 9;
+	border: 0;
+}
+
+/* Same small-label voice as the tag row above it. */
+.lead figcaption {
+	padding-top: 10px;
+	color: var(--ink-light);
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
 /* Body copy runs larger than the 14px the rest of the site uses for labels, nav
    and card text: those are scanned, this is read. The cap stays a measure rather
    than a pixel width, so it tracks the font size -- 62ch resolves to ~700px here,

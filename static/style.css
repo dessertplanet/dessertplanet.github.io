@@ -396,8 +396,10 @@ h2 {
 	margin-left: 0;
 }
 
-/* Deliberately not a link -- no `a`, so the global a:hover never reaches it. */
-.about-copy .name {
+/* The two lifted words in the blurb -- the name and the project tally. Deliberately
+   not links -- no `a`, so the global a:hover never reaches them. */
+.about-copy .name,
+.about-copy .count {
 	color: var(--ink-light);
 }
 

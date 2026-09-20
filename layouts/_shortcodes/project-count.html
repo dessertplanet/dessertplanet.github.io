@@ -1,0 +1,4 @@
+{{- /* The number of project pages, from the same filter home.html ranges over,
+     so the sentence can never disagree with the list below it. The span ships
+     from here rather than the content, keeping markup out of the prose. */ -}}
+<span class="count">{{ len (where site.RegularPages "Section" "projects") }}</span>

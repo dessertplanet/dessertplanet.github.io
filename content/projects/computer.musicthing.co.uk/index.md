@@ -18,6 +18,8 @@ collaborators:
     url: "https://github.com/philmillman"
   - name: "Chris Johnson"
     url: "https://github.com/chrisgjohnson"
+  - name: "Jason Moore"
+    url: "https://github.com/casconed"
 ---
 
 **Finally a scalable home for the 100+ computer cards out there!** 
@@ -34,3 +36,5 @@ In my mind, the risk here was existential to the community (that I care so much 
 My biggest concern was this issue at the top of the community funnel would discourage newcomers and ultimately starve the ecosystem of the (IMO) necessary oxygen that is fresh eyes and fresh ideas for new cool cards.
 
 So this site is born out of that. It is kind of a bespoke Static Site Generator that includes a data pipeline from each card author's release folder all the way to a public docs site (on the musicthing.co.uk domain, no less!) with consistent documentation for card authors who adopt the schema and crucially, a front page curated (weekly as of writing!) by Tom Whitwell himself so that there can be intention behind the landing place where newcomers are sent without overwhelming them with 1,000,000 cards all of which are rad but not all of which are great starting places.
+
+It wouldn't have been possible without a massive amount of brainstorming in the Workshop Discord, a prototype from **Tom Whitwell**, many many code/UX/Accessibility reviews from **Phil Miller**, UX polish contributions from **Chris Johnson**, and test bootstrapping from **Jason Moore**.

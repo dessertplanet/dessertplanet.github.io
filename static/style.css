@@ -257,7 +257,10 @@ h2 {
 	align-items: center;
 	min-height: 146px;
 	border-bottom: 1px solid var(--ink);
-	transition: background-color 180ms ease, padding 180ms ease, margin 180ms ease;
+	/* Transparent so the hover's lid has something to fade up from; an outer
+	   shadow of a transparent colour paints nothing and costs no layout. */
+	box-shadow: 0 -1px 0 transparent;
+	transition: background-color 180ms ease, padding 180ms ease, margin 180ms ease, box-shadow 180ms ease;
 }
 
 .project:last-child {
@@ -272,12 +275,21 @@ h2 {
    at every point in the transition, so it never changes and nothing reflows,
    while the field itself reaches 14px into the page gutter. The gutter is 24px
    at every width this rule applies to, so the bleed never reaches the viewport
-   edge or opens a horizontal scrollbar. */
+   edge or opens a horizontal scrollbar.
+
+   The top edge needs the same swallowed line the bottom gets from its own
+   border, but the rule up there belongs to the previous row, so it falls
+   outside this box and is left behind as a stub narrower than the fill. A 1px
+   shadow is the lid: it tracks the border box, so it spans the bleed for free,
+   and it paints in this row's turn, which comes after the row above. Growing
+   the box instead would mean fighting min-height, which binds at this
+   breakpoint and swallows any padding added to a border-box row. */
 .project:hover {
 	margin-right: -14px;
 	margin-left: -14px;
 	padding-right: 14px;
 	padding-left: 14px;
+	box-shadow: 0 -1px 0 var(--mint);
 	background: var(--mint);
 	color: var(--paper);
 }
@@ -476,7 +488,9 @@ footer small {
 		padding: 25px 0;
 	}
 
-	/* Same trick as the desktop rule, against this breakpoint's 16px gutter. */
+	/* Same trick as the desktop rule, against this breakpoint's 16px gutter. The
+	   lid needs nothing here -- it is a shadow, not padding, so the shorthand
+	   cannot clip it. */
 	.project:hover {
 		margin-right: -8px;
 		margin-left: -8px;

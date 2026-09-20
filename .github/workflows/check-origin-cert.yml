@@ -1,0 +1,101 @@
+name: Check origin TLS certificate
+
+# Cloudflare is set to Full (strict), so it will only talk to the GitHub Pages
+# origin while that origin serves a valid, unexpired cert for dessertplanet.co.
+# Requests to the apex hit Cloudflare, so this connects straight to the Pages
+# IPs with SNI set to the custom domain to see the cert GitHub actually serves.
+
+on:
+  schedule:
+    - cron: '17 13 * * 1'   # Mondays, 13:17 UTC
+  workflow_dispatch:
+    inputs:
+      fail_below_days:
+        description: Fail if the cert expires in fewer than this many days
+        required: false
+        default: '21'
+
+permissions:
+  contents: read
+
+env:
+  DOMAIN: dessertplanet.co
+  PAGES_HOST: dessertplanet.github.io
+  FAIL_BELOW_DAYS: ${{ inputs.fail_below_days || '21' }}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Inspect GitHub Pages origin certificate
+        run: |
+          set -uo pipefail
+
+          # Pages IPs, resolved from the *.github.io name so they track any
+          # change upstream; fall back to the documented apex addresses.
+          mapfile -t ips < <(dig +short "$PAGES_HOST" A | sort)
+          if [ "${#ips[@]}" -eq 0 ]; then
+            echo "::warning::could not resolve $PAGES_HOST, using documented Pages IPs"
+            ips=(185.199.108.153 185.199.109.153 185.199.110.153 185.199.111.153)
+          fi
+
+          now=$(date +%s)
+          status=0
+          min_days=
+
+          {
+            echo "## Origin cert for \`$DOMAIN\` (GitHub Pages)"
+            echo
+            echo "| Pages IP | Issuer | Expires | Days left | Chain |"
+            echo "| --- | --- | --- | --- | --- |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          for ip in "${ips[@]}"; do
+            cert=$(echo \
+              | openssl s_client -connect "$ip:443" -servername "$DOMAIN" \
+                  -verify_hostname "$DOMAIN" -verify_return_error 2>/dev/null \
+              | openssl x509 2>/dev/null)
+            verify_rc=$?
+
+            if [ -z "$cert" ]; then
+              echo "::error::$ip: no certificate returned for $DOMAIN (handshake or hostname verification failed)"
+              echo "| \`$ip\` | — | — | — | ❌ handshake/verify failed |" >> "$GITHUB_STEP_SUMMARY"
+              status=1
+              continue
+            fi
+
+            not_after=$(echo "$cert" | openssl x509 -noout -enddate | cut -d= -f2)
+            issuer=$(echo "$cert" | openssl x509 -noout -issuer -nameopt sep_comma_plus_space | sed 's/^issuer=//')
+            expiry=$(date -u -d "$not_after" +%s)
+            days=$(( (expiry - now) / 86400 ))
+
+            chain='✅ valid'
+            if [ "$verify_rc" -ne 0 ]; then
+              chain='⚠️ chain not verified'
+              status=1
+            fi
+
+            echo "$ip: issuer='$issuer' expires=$not_after ($days days)"
+            echo "| \`$ip\` | $issuer | $not_after | $days | $chain |" >> "$GITHUB_STEP_SUMMARY"
+
+            if [ -z "$min_days" ] || [ "$days" -lt "$min_days" ]; then
+              min_days=$days
+            fi
+          done
+
+          echo >> "$GITHUB_STEP_SUMMARY"
+
+          if [ -z "$min_days" ]; then
+            echo "::error::no usable certificate found on any GitHub Pages IP"
+            exit 1
+          fi
+
+          if [ "$min_days" -lt "$FAIL_BELOW_DAYS" ]; then
+            echo "::error::origin cert for $DOMAIN expires in $min_days day(s); Cloudflare Full (strict) will start returning 526 once it lapses"
+            echo "**❌ Expires in $min_days day(s)** — below the $FAIL_BELOW_DAYS-day threshold. If GitHub has not renewed, toggle *Enforce HTTPS* off and on in repo Settings → Pages, and confirm the DNS records Pages validates against are reachable (a proxied record can block renewal — grey-cloud the apex/www records or use a DNS-only validation path)." >> "$GITHUB_STEP_SUMMARY"
+            status=1
+          else
+            echo "**✅ Expires in $min_days day(s)**, threshold is $FAIL_BELOW_DAYS." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+          exit "$status"

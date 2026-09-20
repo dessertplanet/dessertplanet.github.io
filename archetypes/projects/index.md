@@ -48,7 +48,7 @@ links:
 # lead.image without doing so fails the build with a message saying as much.
 ---
 
-Write the longer version here.
+Work in progress!
 
 <!--
 The lead goes in the front matter above, not here -- this body is for anything

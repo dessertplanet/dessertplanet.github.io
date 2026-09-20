@@ -17,7 +17,7 @@ lead:
 license: "GPL-3.0"
 ---
 
-Write the longer version here.
+Work in progress!
 
 <!--
 The lead goes in the front matter above, not here -- this body is for anything

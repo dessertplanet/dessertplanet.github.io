@@ -43,6 +43,65 @@
 	})();
 	</script>
 
+	{{/* The button and its glyph come from the copy-email shortcode, so this only
+	     attaches behaviour -- there is no anchor to upgrade and no mailto anywhere in
+	     the document. navigator.clipboard is unavailable outside a secure context and
+	     on older Safari, so a copy that fails falls back to selecting the address,
+	     which leaves the reader one keystroke from the same result. */}}
+	<script>
+	(function () {
+		var button = document.querySelector(".copy-email");
+		if (!button) return;
+
+		var status = document.querySelector(".copy-status");
+		var glyph = button.querySelector(".copy-glyph");
+		var address = button.dataset.address;
+
+		var COPY = '<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>';
+		var DONE = '<path d="M20 6 9 17l-5-5"/>';
+
+		var reset;
+
+		function show(paths, message) {
+			glyph.innerHTML = paths;
+			status.textContent = message;
+			button.classList.toggle("is-copied", paths === DONE);
+		}
+
+		function settle(message) {
+			show(DONE, message);
+			clearTimeout(reset);
+			reset = setTimeout(function () {
+				show(COPY, "");
+			}, 2400);
+		}
+
+		/* Last resort: put the address in the selection so a manual copy is one
+		   keystroke away. No checkmark here -- nothing has been copied yet, and a tick
+		   would claim otherwise. */
+		function select() {
+			var range = document.createRange();
+			range.selectNodeContents(button.querySelector(".copy-address"));
+			var selection = window.getSelection();
+			selection.removeAllRanges();
+			selection.addRange(range);
+			status.textContent = "Press \u2318C to copy";
+			clearTimeout(reset);
+			reset = setTimeout(function () {
+				status.textContent = "";
+			}, 2400);
+		}
+
+		button.addEventListener("click", function () {
+			if (!navigator.clipboard) return select();
+
+			navigator.clipboard.writeText(address).then(function () {
+				settle("Copied");
+			}, select);
+		});
+	})();
+	</script>
+
 	{{/* Two surfaces outside the document need a colour: the browser's UI chrome and
 	     the region iOS paints past the end of the page (the strip behind the status
 	     bar, the bottom bar's backdrop, the overscroll bounce). Chrome/Safari take the

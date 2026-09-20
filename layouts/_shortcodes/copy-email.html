@@ -1,0 +1,17 @@
+{{- $address := .Get "address" -}}
+{{- with $address -}}
+{{/* Rendered server-side rather than built by script, so no mailto is ever in the
+     document. The glyph ships with it: copying is the only behaviour this control
+     has, so there is no longer a support check that might leave the affordance
+     advertising something the browser cannot do. The status label is a sibling of
+     the button, not a child -- inside, it would become part of the button's
+     accessible name, which is meant to be the address alone. */}}
+<button type="button" class="copy-email" data-address="{{ . }}">
+	<span class="copy-address">{{ . }}</span>
+	<svg class="copy-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+		<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>
+	</svg>
+</button><span class="copy-status" role="status"></span>
+{{- else -}}
+{{- errorf "copy-email shortcode needs address= (called from %s)" .Position -}}
+{{- end -}}

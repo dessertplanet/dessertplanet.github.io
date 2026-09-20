@@ -311,6 +311,69 @@ h2 {
 	border-bottom: 1px solid var(--ink);
 }
 
+/* Built by the script in baseof.html, replacing the mailto anchor. Styled to sit
+   in the sentence exactly where that anchor did: `font: inherit` takes the Fraunces
+   20px from .about-copy p, and the colours match the `a` rules above, so nothing
+   about the line moves when the upgrade runs. */
+.copy-email {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3em;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	font: inherit;
+	color: var(--mint);
+	cursor: pointer;
+}
+
+/* The control is only as tall as one 20px line, which is half of a comfortable
+   touch target. Padding would push the surrounding sentence around, so the hit
+   area is grown with an overlay instead -- it is out of flow, so the line keeps
+   its metrics. Nothing else in this paragraph is interactive, so the overspill
+   cannot swallow another control's taps. */
+.copy-email::after {
+	content: "";
+	position: absolute;
+	inset: -12px -8px;
+}
+
+.copy-email:hover {
+	color: var(--rollover);
+}
+
+.copy-email:focus-visible {
+	outline: 2px solid var(--rollover);
+	outline-offset: 4px;
+}
+
+/* Sized in em so it tracks the address it sits beside, and flex: none so the
+   stroked box cannot be squashed out of square when the line wraps. */
+.copy-glyph {
+	width: 0.75em;
+	height: 0.75em;
+	flex: none;
+}
+
+/* Set in the meta treatment used for the project tags rather than the paragraph's
+   20px Fraunces: at full size the confirmation competes with the address it is
+   confirming, and it is wide enough at 20px to force a wrap on a phone. Empty
+   until a copy lands, so it costs no width the rest of the time. */
+.copy-status {
+	margin-left: 10px;
+	color: var(--rollover);
+	font-family: "Instrument Sans", sans-serif;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.copy-status:empty {
+	margin-left: 0;
+}
+
 /* Deliberately not a link -- one class, no `a`, so it stays below the
    .about-copy a:hover rule's specificity and never competes with it. */
 .about-copy .name {

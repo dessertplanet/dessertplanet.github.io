@@ -22,6 +22,45 @@
 				{{- end }}
 			</div>
 			{{- end }}
+
+			{{/* Facts about the project rather than prose: the same register as the
+			     tags above. A description list because that is what these are --
+			     label/value pairs -- and because dt/dd drop straight into the grid in
+			     style.css, so the values line up in a column however long the labels
+			     get. Each row is independent: a project can have either, both or
+			     neither, and the list itself only appears if something fills it. */}}
+			{{- $collaborators := .Params.collaborators }}
+			{{- $license := .Params.license }}
+			{{- if or $collaborators $license }}
+			<dl class="detail-facts">
+				{{- with $collaborators }}
+				<dt>{{ cond (eq (len .) 1) "Collaborator" "Collaborators" }}</dt>
+				<dd>
+					{{- range $i, $c := . }}
+					{{- if $i }}<span aria-hidden="true">,</span> {{ end }}
+					{{- with $c.url }}<a href="{{ . }}" target="_blank" rel="noreferrer">{{ $c.name }}</a>
+					{{- else }}{{ $c.name }}{{ end }}
+					{{- end }}
+				</dd>
+				{{- end }}
+
+				{{/* Two spellings, because `license: "MIT"` is the common case and does
+				     not deserve two extra lines of YAML, while a link to the actual
+				     terms is worth allowing. A bare string is the name with no link. */}}
+				{{- with $license }}
+				{{- $name := "" }}{{ $url := "" }}
+				{{- if reflect.IsMap . }}{{ $name = .name }}{{ $url = .url }}
+				{{- else }}{{ $name = . }}{{ end }}
+				{{- with $name }}
+				<dt>License</dt>
+				<dd>
+					{{- with $url }}<a href="{{ . }}" target="_blank" rel="noreferrer">{{ $name }}</a>
+					{{- else }}{{ $name }}{{ end }}
+				</dd>
+				{{- end }}
+				{{- end }}
+			</dl>
+			{{- end }}
 		</div>
 
 		{{ partial "lead.html" . }}

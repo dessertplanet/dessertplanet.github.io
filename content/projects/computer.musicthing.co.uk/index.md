@@ -11,13 +11,18 @@ links:
 lead:
   image: "site-screenshot.png"
   alt: "The computer.musicthing.co.uk front page, showing Tom Whitwell's weekly curated selection of program cards above the full searchable card index"
+collaborators:
+  - name: "Tom Whitwell"
+    url: "https://musicthing.co.uk"
+  - name: "Phil Miller"
+    url: "https://github.com/philmillman"
+  - name: "Chris Johnson"
+    url: "https://github.com/chrisgjohnson"
 ---
 
-Key Collaborators:
-- [Phil Miller](https://github.com/philmillman)
-- [Chris Johnson](https://github.com/chrisgjohnson)
+**Finally a scalable home for the 100+ computer cards out there!** 
 
-**Finally a scalable home for the 100+ computer cards out there!** This project was born out of the realization that because the numbers of Workshop Computer cards was growing exponentially (accelerated at least in part by the community leveraging new AI tools), the system for discovery/entry to the community had to change.
+This project was born out of the realization that because the number of [Music Thing Modular Workshop Computer](https://www.musicthing.co.uk/workshopsystem/) program cards was growing exponentially (accelerated at least in part by the community leveraging new AI tools), the system for discovery/entry to the community had to change.
 
 In my mind, the risk here was existential to the community (that I care so much about) in that new people are arriving in the discord and building their Computer modules all the time, but where do they start? The only ways for newcomers to approach what cards to try first or how to get started were for them to:
 1. Peruse the [GitHub](https://github.com/TomWhitwell/Workshop_Computer) directly (not ideal!)

@@ -18,6 +18,22 @@ links:
 #   alt: ""                    # required: describe what the picture shows
 #   caption: ""                # optional
 #
+# Anyone who worked on this with you. Optional -- leave it out entirely for a
+# solo project. A collaborator with no url renders as plain text, so someone
+# without a profile to link can still be credited:
+#
+# collaborators:
+#   - name: ""
+#     url: ""                  # optional
+#
+# How the work is licensed. Optional. Either spelling works:
+#
+# license: "MIT"
+#
+# license:
+#   name: "CC BY-SA 4.0"
+#   url: "https://creativecommons.org/licenses/by-sa/4.0/"
+#
 # A video lead needs nothing else. An IMAGE lead needs this page to be a leaf
 # bundle, because the file has to live next to it:
 #

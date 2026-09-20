@@ -36,7 +36,13 @@ body {
 	background-repeat: no-repeat;
 	color: var(--ink);
 	font-family: "Instrument Sans", sans-serif;
-	font-size: 14px;
+	/* The base every UI size descends from: nav, the wordmark, footer links, the
+	   back link, the facts values. .prose sets its own 17px for running text.
+	   15 rather than 16 because the header row is measured against the 640px
+	   nav breakpoint below -- at 15 the full row is 622px and still clears it,
+	   at 16 it is 652px and the wordmark collides with the first link before the
+	   breakpoint fires. Raising this further means moving that breakpoint too. */
+	font-size: 15px;
 	line-height: 1.55;
 }
 
@@ -84,6 +90,16 @@ body {
 a {
 	color: var(--mint);
 	text-decoration: none;
+}
+
+/* Every link, everywhere: text and underline take the rollover colour together.
+   The underlined links below deliberately leave text-decoration-color unset so
+   it stays currentColor and follows this automatically, rather than each one
+   needing a second hover rule to keep the underline in step. Components that
+   invert instead -- the pills, the project tiles, the back link -- set their own
+   colour through a class and outrank this. */
+a:hover {
+	color: var(--rollover);
 }
 
 a:focus-visible {
@@ -191,12 +207,6 @@ nav {
 	display: flex;
 	gap: 24px;
 	color: var(--mint);
-}
-
-nav a:hover,
-.socials a:hover,
-.about-copy a:hover {
-	color: var(--rollover);
 }
 
 .intro {
@@ -374,8 +384,7 @@ h2 {
 	margin-left: 0;
 }
 
-/* Deliberately not a link -- one class, no `a`, so it stays below the
-   .about-copy a:hover rule's specificity and never competes with it. */
+/* Deliberately not a link -- no `a`, so the global a:hover never reaches it. */
 .about-copy .name {
 	color: var(--ink-light);
 }
@@ -410,9 +419,11 @@ footer {
 	gap: 10px 24px;
 }
 
+/* 11px, the same tier as the tags, pills and facts labels -- at 10 it was the
+   only use of that size anywhere and read as a mistake rather than a hierarchy. */
 footer small {
 	color: var(--ink-light);
-	font-size: 10px;
+	font-size: 11px;
 	text-transform: uppercase;
 }
 
@@ -624,12 +635,7 @@ footer small {
 
 .prose a {
 	text-decoration: underline;
-	text-decoration-color: var(--ink-light);
 	text-underline-offset: 3px;
-}
-
-.prose a:hover {
-	text-decoration-color: var(--rollover);
 }
 
 /* Embeds are spaced by class, not by `.prose > div`, which caught every div a
@@ -663,6 +669,55 @@ footer small {
 	flex-wrap: wrap;
 	gap: 10px;
 	padding-bottom: 32px;
+}
+
+/* Project facts -- collaborators, license -- sit with the tags and links rather
+   than in the body: same register, so the body can open on the story instead of
+   a list of names. A two-column grid rather than inline rows, so the values line
+   up with each other however long the labels get. */
+.detail-facts {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: baseline;
+	gap: 8px 14px;
+	margin: 0;
+	padding-bottom: 32px;
+	color: var(--ink-light);
+}
+
+/* The pills carry the header's bottom padding when they are last. With facts
+   below them the two are one block, and a full 32px between reads as a break. */
+.detail-links:has(+ .detail-facts) {
+	padding-bottom: 14px;
+}
+
+.detail-facts dt {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.detail-facts dd {
+	margin: 0;
+}
+
+.detail-facts a {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+/* On a phone the label column eats width the values need, so the pairs stack.
+   The gap goes to zero between a label and its own value and reopens between
+   rows, which is what keeps the pairs legible once they share a column. */
+@media (max-width: 480px) {
+	.detail-facts {
+		grid-template-columns: 1fr;
+		gap: 0;
+	}
+
+	.detail-facts dd:not(:last-child) {
+		padding-bottom: 10px;
+	}
 }
 
 /* Shared by the project links and the header's action buttons. */
@@ -736,7 +791,10 @@ footer small {
 		align-items: flex-end;
 		gap: 0;
 		padding-bottom: 10px;
-		font-size: 14px;
+		/* Back to the base size: the 760px rule above drops the horizontal nav to
+		   11px, which the collapsed menu has no reason to inherit. Tracks the base
+		   in body -- if that changes, change this. */
+		font-size: 15px;
 	}
 
 	.nav-enhanced .menu-toggle[aria-expanded="true"] + nav {

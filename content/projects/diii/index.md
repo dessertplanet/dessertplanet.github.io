@@ -1,6 +1,6 @@
 ---
-title: "DX7 for Organelle"
-weight: 99
+title: "diii"
+weight: 3
 summary: ""
 tags: []
 links:

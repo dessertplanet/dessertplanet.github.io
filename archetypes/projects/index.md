@@ -1,5 +1,5 @@
 ---
-title: "DX7 for Organelle"
+title: "{{ replace .File.ContentBaseName `-` ` ` | title }}"
 weight: 99
 summary: ""
 tags: []

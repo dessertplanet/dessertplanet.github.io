@@ -1,5 +1,5 @@
 ---
-title: "DX7 for Organelle"
+title: "Icarus for Organelle"
 weight: 99
 summary: ""
 tags: []

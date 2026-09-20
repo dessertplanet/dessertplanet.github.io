@@ -1,5 +1,5 @@
 ---
-title: "DX7 for Organelle"
+title: "Duo Midi"
 weight: 99
 summary: ""
 tags: []

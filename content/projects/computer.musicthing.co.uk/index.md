@@ -2,7 +2,7 @@
 title: "Program Cards site"
 weight: 1
 summary: "computer.musicthing.co.uk is a documentation, curation, and discovery website for Workshop Computer program cards"
-tags: ["Music Thing Modular", "Workshop Computer", "Open source", "Web"]
+tags: ["Music Thing Modular", "WS Computer", "Web"]
 links:
   - name: "Launch site"
     url: "https://computer.musicthing.co.uk"

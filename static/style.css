@@ -840,7 +840,14 @@ footer small {
 .to-top {
 	position: fixed;
 	right: 24px;
-	bottom: 24px;
+	/* Narrow viewports have no margin to escape into, so the button overlays the
+	   column and has to clear the copyright by hand: at full scroll the two would
+	   otherwise land on each other. That line's top edge sits 79px above the
+	   document's bottom -- 17px of text, centred in the 37px row the footer pills
+	   set, over the footer's 52px of bottom padding -- so this leaves a 17px gap,
+	   enough that the 6px the entry transition starts below its resting place does
+	   not dip into it. */
+	bottom: 96px;
 	z-index: 2;
 	border-color: var(--mint);
 	background: var(--mint);
@@ -849,6 +856,31 @@ footer small {
 	visibility: hidden;
 	transform: translateY(6px);
 	transition: opacity 180ms ease, transform 180ms ease, visibility 180ms, background-color 180ms ease, border-color 180ms ease;
+}
+
+/* Once the margin beside the shell is wide enough to hold the pill, move it out
+   there -- right of the copyright, over nothing but gradient, so it no longer
+   needs to sit high to avoid a collision and drops back to the bottom corner.
+   Anchored by `left` off the shell's right edge rather than by `right` off the
+   viewport: `right` would park it against the window and leave it drifting
+   further from the column the wider the screen got, which is the complaint this
+   rule exists to fix. It also means nothing here has to know the pill's width.
+   Percentage rather than 100vw because vw counts the scrollbar and the shell's
+   own 100% does not. The breakpoint is --max-width plus room for the pill and a
+   gap either side; widen the pill's text and this needs raising to match. */
+@media (min-width: 1420px) {
+	.to-top {
+		left: calc((100% + var(--max-width)) / 2 + 20px);
+		right: auto;
+		/* Level with the footer's own row rather than sitting below it in the
+		   corner. The button is a pill, so it is exactly as tall as the pills that
+		   set that row's height, and the row's bottom edge is the footer's
+		   padding-bottom above the end of the document -- which makes this that
+		   same padding, and lands the button's box on the row: bottom edge level
+		   with Dessert menu, centre level with the copyright beside it. Tracks
+		   footer's padding-bottom; change one and change the other. */
+		bottom: 52px;
+	}
 }
 
 .to-top.is-visible {
@@ -866,7 +898,6 @@ footer small {
 @media (max-width: 480px) {
 	.to-top {
 		right: 16px;
-		bottom: 16px;
 	}
 }
 

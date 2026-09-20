@@ -60,9 +60,10 @@ enableRobotsTXT = true
 	[menu.main.params]
 		external = true
 
-# No feed. Project pages carry no date, so every RSS item was stamped year 0001
-# and readers had nothing to order them by. Dropping the output also drops the
-# alternate link in head.html.
+# No feed. This was once forced -- project pages carried no date, so every RSS
+# item was stamped year 0001 and readers had nothing to order them by -- but they
+# carry a release date now, so turning one back on would order correctly. Left off
+# as a choice. Dropping the output also drops the alternate link in head.html.
 [outputs]
 	home = ["html"]
 	section = ["html"]

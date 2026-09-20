@@ -585,6 +585,16 @@ footer small {
 	letter-spacing: 0;
 }
 
+/* Sits under the title in the same small-label voice as the tags beside it,
+   rather than introducing a third size into the header block. */
+.detail-date {
+	margin: 6px 0 20px;
+	color: var(--ink-light);
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
 .lede {
 	max-width: 58ch;
 	margin: 0 0 24px;

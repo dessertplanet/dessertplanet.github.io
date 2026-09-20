@@ -4,8 +4,10 @@ weight: 2
 summary: "A remix of monome's classic grid-based MLR sample cutting platform that runs on the Workshop Computer right in your eurorack"
 tags: ["Music Thing Modular", "WS Computer", "monome", "RP2040", "Firmware"]
 links:
-  - name: "Docs & Download"
+  - name: "Docs & download"
     url: "https://computer.musicthing.co.uk/programs/15-mlrws/"
+  - name: "Launch sample manager web app"
+    url: "/MLRws-web"
 # The one image or video that represents this project. Optional, but it also
 # becomes the page's link preview (og:image) when set. Uncomment one:
 #

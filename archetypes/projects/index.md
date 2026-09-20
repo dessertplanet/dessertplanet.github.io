@@ -1,5 +1,8 @@
 ---
 title: "{{ replace .File.ContentBaseName `-` ` ` | title }}"
+# When it came out. Rendered as the month and year under the title, so the day
+# only has to be close enough. Leave it off and no date line appears.
+date: {{ now.Format "2006-01-02" }}
 weight: 99
 summary: ""
 tags: []

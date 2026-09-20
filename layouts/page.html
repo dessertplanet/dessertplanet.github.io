@@ -11,6 +11,14 @@
 				{{- end }}
 			</div>
 
+			{{/* Only the month and year are shown, so the day in the front matter is
+			     free to be a guess. A <time> so the exact value stays machine-readable
+			     even though the page rounds it off. Absent from the front matter, .Date
+			     is the zero time and the line is skipped entirely. */}}
+			{{- if not .Date.IsZero }}
+			<p class="detail-date"><time datetime="{{ .Date.Format "2006-01" }}">{{ .Date.Format "January 2006" }}</time></p>
+			{{- end }}
+
 			{{- with .Params.summary }}
 			<p class="lede">{{ . }}</p>
 			{{- end }}

@@ -510,19 +510,19 @@ footer small {
 }
 /* --- Project detail pages --- */
 
+/* A breath after the body copy before the rule above the footer -- .prose adds
+   its own 28px underneath the last line, so this lands about 84px clear. It was
+   100px, which stacked to 128 and read as the page having ended early; the 404
+   had already overridden it down to this value for the same reason. */
 .detail {
-	padding-bottom: 100px;
+	padding-bottom: 56px;
 	border-bottom: 1px solid var(--ink);
 }
 
-/* The 404 has no body copy: .detail's allowance for it reads as a gap, and the
-   rule that would divide header from body lands just above .detail's own,
-   making a thin empty strip. Keep the outer rule, which every page has above
-   the footer, and drop the inner one. */
-.detail-404 {
-	padding-bottom: 56px;
-}
-
+/* The 404 has no body copy, so the rule that divides header from body would land
+   just above .detail's own, making a thin empty strip. Keep the outer rule, which
+   every page has above the footer, and drop the inner one. The padding override
+   that used to sit here went away when .detail came down to the same value. */
 .detail-404 .detail-head {
 	border-bottom: none;
 }
@@ -623,7 +623,10 @@ footer small {
    past 75 characters a line, which reads worse, not better. */
 .prose {
 	max-width: 62ch;
-	padding: 28px 0;
+	/* Top only. The bottom of the body is .detail's padding to own -- when both
+	   set it they stack, and the page reads as having ended well before the rule
+	   arrives. */
+	padding: 28px 0 0;
 	color: var(--ink-light);
 	font-size: 17px;
 	line-height: 1.6;
@@ -631,6 +634,13 @@ footer small {
 
 .prose p {
 	margin: 0 0 18px;
+}
+
+/* The gap between paragraphs, not a gap after the last one: left alone it leaks
+   18px past the end of the body and stacks onto .detail's padding. Matches any
+   trailing block -- a list or an embed ends a page as often as a paragraph. */
+.prose > :last-child {
+	margin-bottom: 0;
 }
 
 .prose a {

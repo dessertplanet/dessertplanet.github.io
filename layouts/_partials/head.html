@@ -22,4 +22,15 @@
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:image" content="{{ $image }}">
 
+{{/* Ahead of the stylesheet, and as a link rather than an @import inside it: an
+     @import is not discoverable until style.css has been fetched and parsed, which
+     serialises the font request behind it. The preconnects start the DNS and TLS
+     handshakes for both font origins -- the CSS comes from one, the woff2 files from
+     another -- while the stylesheets are still in flight. gstatic is cross-origin
+     because fonts are fetched in CORS mode, and a preconnect without it warms the
+     wrong connection. */}}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap">
+
 <link rel="stylesheet" href="{{ "style.css" | relURL }}">

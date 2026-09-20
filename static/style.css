@@ -49,12 +49,20 @@ body {
    clips the circle's horizontal bleed. The circle's own mask fades its edge to
    nothing so what remains blends into the gradient. */
 .planet-decor {
+	/* One size drives everything: the circle's width, the strip's height, and how far
+	   the circle hangs off the right edge. The overhang has to be a fraction of the
+	   circle rather than a vw length -- the circle stops growing at 520px, so a vw
+	   offset keeps sliding right after the circle has stopped widening and walks it
+	   off the screen. At 2560px wide the old -18vw was -461px against a 520px circle,
+	   leaving a 59px sliver. As a fraction, the same 64% of the circle stays on screen
+	   at every width. */
+	--planet-size: min(50vw, 520px);
+	--planet-overhang: 0.36;
 	position: fixed;
 	left: 0;
 	right: 0;
 	bottom: 0;
-	height: 50vw;
-	max-height: 520px;
+	height: var(--planet-size);
 	overflow: hidden;
 	pointer-events: none;
 	opacity: 0.5;
@@ -62,10 +70,9 @@ body {
 
 .planet-decor img {
 	position: absolute;
-	right: -18vw;
+	right: calc(var(--planet-size) * -1 * var(--planet-overhang));
 	bottom: 0;
-	width: 50vw;
-	max-width: 520px;
+	width: var(--planet-size);
 	aspect-ratio: 1;
 	object-fit: cover;
 	border-radius: 50%;
@@ -404,12 +411,8 @@ footer small {
 	}
 
 	.planet-decor {
-		height: 80vw;
-	}
-
-	.planet-decor img {
-		right: -32vw;
-		width: 80vw;
+		--planet-size: min(80vw, 520px);
+		--planet-overhang: 0.4;
 	}
 
 	footer {

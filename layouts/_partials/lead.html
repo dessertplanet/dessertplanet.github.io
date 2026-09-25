@@ -7,7 +7,7 @@
      than a per-page decision. It also sits outside .prose, so it is free of the
      62ch reading measure that the body is capped at.
 
-     Two shapes, one field:
+     Three shapes, one field:
 
        lead:
          image: shot.jpg        # a file beside index.md in the page bundle
@@ -16,13 +16,19 @@
        lead:
          video: dQw4w9WgXcQ     # a YouTube id
          caption: "..."         # optional
+       lead:
+         clip: demo.mp4         # a short silent loop beside index.md
+         alt: "..."             # what it shows, as for an image
+         caption: "..."         # optional
 */}}
 {{- with .Params.lead -}}
 {{- $page := $.Page -}}
 {{- $caption := .caption -}}
 
-{{- if and .image .video -}}
-	{{- errorf "lead: %s sets both image and video -- a project leads with one thing or the other" $page.File.Path -}}
+{{- $kinds := 0 -}}
+{{- range (slice .image .video .clip) -}}{{- if . -}}{{- $kinds = add $kinds 1 -}}{{- end -}}{{- end -}}
+{{- if gt $kinds 1 -}}
+	{{- errorf "lead: %s sets more than one of image, video and clip -- a project leads with one thing" $page.File.Path -}}
 {{- end -}}
 
 {{- with .video -}}
@@ -36,6 +42,27 @@
 		allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 	{{- with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
 </figure>
+{{- end -}}
+
+{{- with .clip -}}
+{{- $clip := $page.Resources.GetMatch . -}}
+{{- if not $clip -}}
+	{{- errorf "lead.clip %q not found for %s -- a lead clip has to sit beside its index.md, so this page needs to be a leaf bundle: move it to content/projects/<name>/index.md and put the file in that folder" . $page.File.Path -}}
+{{- else -}}
+{{- $alt := $.Params.lead.alt | default $caption | default (printf "%s video" $page.Title) -}}
+<figure class="lead lead-clip">
+	{{/* A GIF that is a video: muted is what lets autoplay through at all, and
+	     playsinline stops iOS taking it fullscreen. No controls, because a scrubber
+	     on a four-second loop is noise -- but motion that runs past five seconds
+	     needs a way to stop it, so the whole frame is a pause button. A <video>
+	     without controls is not interactive content, so it may sit inside one.
+	     The behaviour, and holding still under reduced motion, is in baseof.html. */}}
+	<button type="button" class="lead-clip-toggle" aria-label="Pause: {{ $alt }}" data-label="{{ $alt }}">
+		<video src="{{ $clip.RelPermalink }}" autoplay muted loop playsinline preload="auto"></video>
+	</button>
+	{{- with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+</figure>
+{{- end -}}
 {{- end -}}
 
 {{- with .image -}}

@@ -117,6 +117,39 @@
 	})();
 	</script>
 
+	{{/* The lead clip's pause button (see lead.html). The <video> carries autoplay
+	     itself so the loop runs without this script; all this adds is the way to
+	     stop it, and holding it still for readers who have asked for less motion --
+	     paused on its first frame, one press from playing, rather than hidden. */}}
+	<script>
+	(function () {
+		var button = document.querySelector(".lead-clip-toggle");
+		if (!button) return;
+
+		var video = button.querySelector("video");
+		var label = button.dataset.label;
+
+		function sync() {
+			button.classList.toggle("is-paused", video.paused);
+			button.setAttribute("aria-label", (video.paused ? "Play: " : "Pause: ") + label);
+		}
+
+		video.addEventListener("play", sync);
+		video.addEventListener("pause", sync);
+
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+			video.removeAttribute("autoplay");
+			video.pause();
+		}
+		sync();
+
+		button.addEventListener("click", function () {
+			if (video.paused) video.play();
+			else video.pause();
+		});
+	})();
+	</script>
+
 	{{/* Two surfaces outside the document need a colour: the browser's UI chrome and
 	     the region iOS paints past the end of the page (the strip behind the status
 	     bar, the bottom bar's backdrop, the overscroll bounce). Chrome/Safari take the

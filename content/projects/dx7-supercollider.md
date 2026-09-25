@@ -6,8 +6,7 @@ tags: []
 links:
   - name: "GitHub"
     url: ""
-# The one image or video that represents this project. Optional, but it also
-# becomes the page's link preview (og:image) when set. Uncomment one:
+# The one image or video that represents this project. Optional. Uncomment one:
 #
 # lead:
 #   video: "VIDEO_ID"          # a YouTube id -- works in a plain .md file

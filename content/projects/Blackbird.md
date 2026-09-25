@@ -11,8 +11,7 @@ links:
   - name: "View code"
     url: "https://github.com/TomWhitwell/Workshop_Computer/tree/781949a1bd44e65cf23c2a333bb8ac5b1fd5dc38/releases/41_blackbird"
 date: 2025-12-25
-# The one image or video that represents this project. Optional, but it also
-# becomes the page's link preview (og:image) when set. Uncomment one:
+# The one image or video that represents this project. Optional. Uncomment one:
 #
 # lead:
 #   video: "VIDEO_ID"          # a YouTube id -- works in a plain .md file

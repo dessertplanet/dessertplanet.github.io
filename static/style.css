@@ -638,6 +638,52 @@ footer small {
 	margin: 0;
 }
 
+/* The clip sits under the same two caps as a lead image, for the same reasons.
+   The button is only there to be pressed, so it is stripped to nothing and
+   shrinks to the video: a tall clip narrowed by the height cap then leaves no
+   dead, clickable strip beside it. */
+.lead-clip-toggle {
+	position: relative;
+	display: block;
+	max-width: 100%;
+	padding: 0;
+	border: 0;
+	background: none;
+	font: inherit;
+	cursor: pointer;
+}
+
+.lead-clip-toggle:focus-visible {
+	outline: 2px solid var(--rollover);
+	outline-offset: 4px;
+}
+
+.lead-clip video {
+	display: block;
+	max-width: 100%;
+	max-height: 76vh;
+	width: auto;
+	height: auto;
+}
+
+/* Only while paused: a playing loop needs no chrome over it, but a still frame
+   that is secretly a video should say so. Same pill shape as the buttons
+   elsewhere on the page, pinned to the corner so it covers as little as it can. */
+.lead-clip-toggle.is-paused::after {
+	content: "\25B6\FE0E  Play";
+	position: absolute;
+	left: 12px;
+	bottom: 12px;
+	padding: 9px 18px;
+	border-radius: 999px;
+	background: var(--paper);
+	color: var(--ink-light);
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	white-space: pre;
+}
+
 .lead-video iframe {
 	display: block;
 	width: 100%;

@@ -13,10 +13,9 @@ links:
 #   video: "VIDEO_ID"          # a YouTube id -- works in a plain .md file
 #   caption: ""                # optional
 #
-# lead:
-#   image: "shot.jpg"          # a file sitting beside this index.md
-#   alt: ""                    # required: describe what the picture shows
-#   caption: ""                # optional
+lead:
+  image: "diii.png"          # a file sitting beside this index.md
+  alt: "a screenshot of the diii web app"                    # required: describe what the picture shows
 #
 # Anyone who worked on this with you. Optional -- leave it out entirely for a
 # solo project. A collaborator with no url renders as plain text, so someone

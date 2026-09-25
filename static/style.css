@@ -590,9 +590,8 @@ footer small {
 .detail-date {
 	margin: 6px 0 20px;
 	color: var(--ink-light);
-	font-size: 11px;
-	text-transform: uppercase;
-	letter-spacing: 0.04em;
+	font-family: "Fraunces", serif;
+	font-size: 20px;
 }
 
 .lede {
@@ -688,6 +687,103 @@ footer small {
 	text-decoration: underline;
 	text-underline-offset: 3px;
 }
+
+.prose pre {
+	background: rgba(0, 0, 0, 0.3);
+	border-radius: 6px;
+	padding: 16px;
+	overflow-x: auto;
+	margin: 18px 0;
+}
+
+.prose code {
+	background: rgba(0, 0, 0, 0.3);
+	padding: 2px 6px;
+	border-radius: 4px;
+	color: white;
+	font-family: "Monaco", "Courier New", monospace;
+	font-size: 14px;
+}
+
+.prose pre code {
+	background: none;
+	padding: 0;
+	font-size: 13px;
+	line-height: 1.5;
+	color: white;
+}
+
+/* Chroma syntax highlighting (monokai theme) */
+.chroma {
+	color: #f8f8f2;
+	background-color: #272822;
+}
+.chroma .err { color: #960050; background-color: #1e0010 }
+.chroma .lnt { color: #7f7f7f }
+.chroma .ln { color: #7f7f7f }
+.chroma .k { color: #66d9ef }
+.chroma .kc { color: #66d9ef }
+.chroma .kd { color: #66d9ef }
+.chroma .kn { color: #f92672 }
+.chroma .kp { color: #66d9ef }
+.chroma .kr { color: #66d9ef }
+.chroma .kt { color: #66d9ef }
+.chroma .n { color: #f8f8f2 }
+.chroma .na { color: #a6e22e }
+.chroma .nb { color: #f8f8f2 }
+.chroma .nc { color: #a6e22e }
+.chroma .no { color: #66d9ef }
+.chroma .nd { color: #a6e22e }
+.chroma .ni { color: #f8f8f2 }
+.chroma .ne { color: #a6e22e }
+.chroma .nf { color: #a6e22e }
+.chroma .nl { color: #f8f8f2 }
+.chroma .nn { color: #f8f8f2 }
+.chroma .nx { color: #a6e22e }
+.chroma .p { color: #f8f8f2 }
+.chroma .py { color: #f8f8f2 }
+.chroma .l { color: #e6db74 }
+.chroma .ld { color: #e6db74 }
+.chroma .s { color: #e6db74 }
+.chroma .sa { color: #e6db74 }
+.chroma .sb { color: #e6db74 }
+.chroma .sc { color: #e6db74 }
+.chroma .sd { color: #e6db74 }
+.chroma .s1 { color: #e6db74 }
+.chroma .s2 { color: #e6db74 }
+.chroma .se { color: #ae81ff }
+.chroma .sh { color: #e6db74 }
+.chroma .si { color: #e6db74 }
+.chroma .sx { color: #e6db74 }
+.chroma .sr { color: #e6db74 }
+.chroma .s3 { color: #e6db74 }
+.chroma .ss { color: #e6db74 }
+.chroma .m { color: #ae81ff }
+.chroma .mb { color: #ae81ff }
+.chroma .mf { color: #ae81ff }
+.chroma .mh { color: #ae81ff }
+.chroma .mi { color: #ae81ff }
+.chroma .il { color: #ae81ff }
+.chroma .mo { color: #ae81ff }
+.chroma .o { color: #f92672 }
+.chroma .ow { color: #f92672 }
+.chroma .c { color: #75715e }
+.chroma .c1 { color: #75715e }
+.chroma .ch { color: #75715e }
+.chroma .cm { color: #75715e }
+.chroma .cp { color: #75715e }
+.chroma .cpf { color: #75715e }
+.chroma .cs { color: #75715e }
+.chroma .gd { color: #f92672 }
+.chroma .ge { font-style: italic }
+.chroma .gh { color: #f8f8f2; font-weight: bold }
+.chroma .gi { color: #a6e22e }
+.chroma .gp { color: #75715e; font-weight: bold }
+.chroma .gs { font-weight: bold }
+.chroma .gu { color: #75715e; font-weight: bold }
+.chroma .gt { color: #f92672 }
+.chroma .gl { color: #f92672 }
+.chroma .w { color: #f8f8f2 }
 
 /* Embeds are spaced by class, not by `.prose > div`, which caught every div a
    body happened to hold. The bandcamp shortcode emits .embed itself; Hugo's

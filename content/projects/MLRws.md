@@ -8,34 +8,17 @@ links:
     url: "https://computer.musicthing.co.uk/programs/15-mlrws/"
   - name: "Launch sample manager web app"
     url: "/MLRws-web"
-# The one image or video that represents this project. Optional, but it also
-# becomes the page's link preview (og:image) when set. Uncomment one:
-#
+  - name: "View code"
+    url: "https://github.com/TomWhitwell/Workshop_Computer/tree/781949a1bd44e65cf23c2a333bb8ac5b1fd5dc38/releases/15_MLRws"
 lead:
   video: "fhHJykM1GWk"          # a YouTube id -- works in a plain .md file
 
 license: "GPL-3.0"
+date: 2026-06-15
 ---
 
-Work in progress!
+MLRws was a big undertaking, it allowed me to mess around with my new understanding of how the monome serial protocol works, thanks to my work on [diii](/projects/diii) and [viii](/projects/viii). Originally I actually thought of [viii](/projects/viii) as a sibling project to MLRws since both are based on a similar minimal version of the gesture-to-serial-messages translation available in [libmonome](https://github.com/monome/libmonome/).
 
-<!--
-The lead goes in the front matter above, not here -- this body is for anything
-that comes after it. Embeds available in this body:
+I also seized the opportunity to learn about and try out some additional approaches in the world of the Workshop Computer. [Brian Dorsey](https://github.com/briandorsey) showed with one of his excellent early cards Backyard Rain, that streaming ADPCM encoded audio from the flash on the physical program card was possible (this was necessary for Backyard Rain to play rain samples longer than a few seconds). And [RYK](https://www.thonk.co.uk/wp-content/uploads/2026/01/MTM-Music-Thing-Modular-cards-Manual_01_FINAL-THONK_V2.pdf) showed with their powerful tape card that not only reading but **writing and recalling** audio from flash was possible (a closed-source demonstration but enough to get me thinking). 
 
-  {{</* youtube id="VIDEO_ID" class="embed embed-video" */>}}
-      Hugo's built-in, for a SECOND video further down the page. Pass the class:
-      given one, it emits that wrapper instead of its own inline aspect-ratio
-      box, which is what `.embed` spacing and the 16:9 rule in style.css hook
-      onto. It also takes start=, end=, title=, loop=, mute=, controls= and
-      loading=.
-  {{</* bandcamp album="123456789" */>}}
-  {{</* bandcamp track="123456789" */>}}
-
-Body images are capped at the 62ch reading measure. Anything that wants to be
-wider than the text belongs in the lead.
-
-For a WebMIDI/WebAudio widget, drop the module in static/js/ and add:
-
-  <script type="module" src="/js/your-widget.js"></script>
--->
+The idea for MLRws came from the exciting possibility that combining these two techniques with the monome protocol stuff would be sufficient to build out a version of MLR if I could make it fit in the performance constraints of the rp2040. And it did!

@@ -78,6 +78,19 @@ enableRobotsTXT = true
 [markup.goldmark.renderer]
 	unsafe = true
 
+[markup.highlight]
+	codeFences = true
+	guessSyntax = true
+	hl_Lines = ""
+	hl_inline = false
+	lineAnchors = ""
+	lineNoStart = 1
+	lineNos = false
+	lineNumbersInTable = false
+	noClasses = false
+	style = "monokai"
+	tabWidth = 4
+
 # No taxonomy pages: `tags` in front matter are display labels, not a filterable
 # taxonomy. Removing this block would generate /tags/ and /categories/ pages.
 [taxonomies]

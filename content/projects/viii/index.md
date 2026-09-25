@@ -1,69 +1,23 @@
 ---
 title: "viii"
 weight: 4
-summary: ""
-tags: []
+summary: "iii and lua compiled to WASM, basically the web as an iii target. This allows users with older or incompatible hardware to join in the iii fun"
+tags: [monome, iii, lua, Web Serial, midi, WASM]
 links:
   - name: "GitHub"
     url: ""
-# The one image or video that represents this project. Optional, but it also
-# becomes the page's link preview (og:image) when set. Uncomment one:
-#
-# lead:
-#   video: "VIDEO_ID"          # a YouTube id -- works in a plain .md file
-#   caption: ""                # optional
-#
-# lead:
-#   image: "shot.jpg"          # a file sitting beside this index.md
-#   alt: ""                    # required: describe what the picture shows
-#   caption: ""                # optional
-#
-# Anyone who worked on this with you. Optional -- leave it out entirely for a
-# solo project. A collaborator with no url renders as plain text, so someone
-# without a profile to link can still be credited:
-#
-# collaborators:
-#   - name: ""
-#     url: ""                  # optional
-#
-# How the work is licensed. Optional. Either spelling works:
-#
-# license: "MIT"
-#
-# license:
-#   name: "CC BY-SA 4.0"
-#   url: "https://creativecommons.org/licenses/by-sa/4.0/"
-#
-# A video lead needs nothing else. An IMAGE lead needs this page to be a leaf
-# bundle, because the file has to live next to it:
-#
-#     content/projects/<name>/index.md   <- this file
-#     content/projects/<name>/shot.jpg
-#
-# Start one with `hugo new projects/<name>/index.md`, or move an existing
-# `<name>.md` to `<name>/index.md` when you add its first image. Setting
-# lead.image without doing so fails the build with a message saying as much.
+lead:
+  image: "viii.png"
+license: "GPL-3.0"
+date: 2026-04-07
 ---
 
-Work in progress!
+viii came about because I was super excited about [diii](/projects/diii) but I was super cognizant of the fact that there were many folks already engaged with the monome community who would be unable to leverage [iii](https://monome.org/docs/iii) or [diii](/projects/diii) because their grid or arc devices were old enough that they weren't built with the rp2040 processor necessary for iii compatibility. 
 
-<!--
-The lead goes in the front matter above, not here -- this body is for anything
-that comes after it. Embeds available in this body:
+I messed around with a branch of [diii](/projects/diii) at one point that did something similar, sending serial magic bytes in the monome mext protocol over web serial to my modern grid in "serialosc" mode instead of iii mode, translating lua to serial at the browser layer instead of the firmware layer... That ended up not making sense to indlude in the core diii implementation but it didn't stop me from wanting to put a version out there that could do this. 
 
-  {{</* youtube id="VIDEO_ID" class="embed embed-video" */>}}
-      Hugo's built-in, for a SECOND video further down the page. Pass the class:
-      given one, it emits that wrapper instead of its own inline aspect-ratio
-      box, which is what `.embed` spacing and the 16:9 rule in style.css hook
-      onto. It also takes start=, end=, title=, loop=, mute=, controls= and
-      loading=.
-  {{</* bandcamp album="123456789" */>}}
-  {{</* bandcamp track="123456789" */>}}
+I also had a fortuitous conversation with [Phil Miller](https://github.com/philmillman) while at the Dyski retreat in Toronto, where he mentioned WASM to me and how it seemed like it enabled the possibility of doing a lot more via web apps. 
 
-Body images are capped at the 62ch reading measure. Anything that wants to be
-wider than the text belongs in the lead.
+For viii I then went down this WASM path- effectively building "the browser as an iii device" with the iii framework compiled to WASM along with all the necessary normally device-side dependencies like lua. Instead of a file-system, viii uses your browser cache. It works, in theory, with any grid generation back to the "series" versions, and there have already been super cool examples of folks leveraging this to use iii scripts with their 15-year-old grid hardware, which I was super excited to see.
 
-For a WebMIDI/WebAudio widget, drop the module in static/js/ and add:
-
-  <script type="module" src="/js/your-widget.js"></script>
--->
+A big shoutout to Zack ([@infinitedigits](https://infinitedigits.co)) for trading grids with me for a bit so I could test older FTDI-based grid models with viii- since all I have usually is my KB2040-based 16x8 Neotrellis DIY grid, and my 16x16 monome zero modern RP2040 grid.

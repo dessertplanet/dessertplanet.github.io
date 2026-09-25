@@ -1,68 +1,25 @@
 ---
 title: "diii"
 weight: 3
-summary: ""
-tags: []
+summary: "Commissioned by tehn at monome, a web based programming and file management interface for iii-capable devices"
+tags: [monome, iii, lua, Web Serial, MIDI]
 links:
-  - name: "GitHub"
-    url: ""
-# The one image or video that represents this project. Optional, but it also
-# becomes the page's link preview (og:image) when set. Uncomment one:
-#
-# lead:
-#   video: "VIDEO_ID"          # a YouTube id -- works in a plain .md file
-#   caption: ""                # optional
-#
+  - name: "Launch web app"
+    url: "https://monome.org/diii"
+  - name: "View code"
+    url: "https://github.com/monome/web-diii"
 lead:
   image: "diii.png"          # a file sitting beside this index.md
   alt: "a screenshot of the diii web app"                    # required: describe what the picture shows
-#
-# Anyone who worked on this with you. Optional -- leave it out entirely for a
-# solo project. A collaborator with no url renders as plain text, so someone
-# without a profile to link can still be credited:
-#
-# collaborators:
-#   - name: ""
-#     url: ""                  # optional
-#
-# How the work is licensed. Optional. Either spelling works:
-#
-# license: "MIT"
-#
-# license:
-#   name: "CC BY-SA 4.0"
-#   url: "https://creativecommons.org/licenses/by-sa/4.0/"
-#
-# A video lead needs nothing else. An IMAGE lead needs this page to be a leaf
-# bundle, because the file has to live next to it:
-#
-#     content/projects/<name>/index.md   <- this file
-#     content/projects/<name>/shot.jpg
-#
-# Start one with `hugo new projects/<name>/index.md`, or move an existing
-# `<name>.md` to `<name>/index.md` when you add its first image. Setting
-# lead.image without doing so fails the build with a message saying as much.
+collaborators:
+  - name: "@tehn (Brian Crabtree)"
+    url: "https://nnnnnnnn.co"                  # optional
+license: "GPL-3.0"
+date: 2026-03-28
 ---
 
-Work in progress!
+Brian (@tehn) at monome reached out about commissioning an adaptation of [web-druid](/projects/web-druid) that would work with monome's new [iii](https://monome.org/docs/iii) framework. I was super excited to get to work on something official for monome, considering I had been a fan of their work for many many years. Working with Brian on this was an absolute pleasure- and the result has been pretty well received, with new iii scripts being released regularly and no issues on the web-diii github since launch.
 
-<!--
-The lead goes in the front matter above, not here -- this body is for anything
-that comes after it. Embeds available in this body:
+For those who are into instrument design, iii really is special and I strongly encourage you to give iii script development a try. Imagine basically being able to develop your own custom midi control gestures on hardware that supports it, then being able to plug that custom controller into any MIDI host and interact with that instrument using your custom interface. I have had a huge amount of fun with my grid plugged directly into my Workshop System doing this, or even just plugged into my laptop with some of the built-in synthesizers included with Ableton Live.
 
-  {{</* youtube id="VIDEO_ID" class="embed embed-video" */>}}
-      Hugo's built-in, for a SECOND video further down the page. Pass the class:
-      given one, it emits that wrapper instead of its own inline aspect-ratio
-      box, which is what `.embed` spacing and the 16:9 rule in style.css hook
-      onto. It also takes start=, end=, title=, loop=, mute=, controls= and
-      loading=.
-  {{</* bandcamp album="123456789" */>}}
-  {{</* bandcamp track="123456789" */>}}
-
-Body images are capped at the 62ch reading measure. Anything that wants to be
-wider than the text belongs in the lead.
-
-For a WebMIDI/WebAudio widget, drop the module in static/js/ and add:
-
-  <script type="module" src="/js/your-widget.js"></script>
--->
+diii is similar to [web-druid](/projects/web-druid) in that it communicates via utf-8 encoded string literals containing lua that the iii firmwares understand, but diii is different in that it also allows interaction with the [littlefs](https://github.com/littlefs-project/littlefs) filesystem that exists on iii devices. So you can upload new scripts or presets, download scripts that are stored on the device, and more.

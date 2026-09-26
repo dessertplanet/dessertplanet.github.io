@@ -4,8 +4,10 @@ weight: 4
 summary: "iii and lua compiled to WASM, basically the web as an iii target. This allows users with older or incompatible hardware to join in the iii fun"
 tags: [monome, iii, lua, Web Serial, midi, WASM]
 links:
-  - name: "GitHub"
-    url: ""
+  - name: "Launch web app"
+    url: "/viii"
+  - name: "View code"
+    url: "https://github.com/dessertplanet/viii"
 lead:
   image: "viii.png"
 license: "GPL-3.0"

@@ -1,11 +1,18 @@
 ---
 title: "DX7 for Organelle"
 weight: 99
-summary: ""
+summary: "Aziz Ege Gonul’s accurate Yamaha DX-7 clone. Extended to run on Critter & Guitari Organelle M/S"
 tags: []
 links:
-  - name: "GitHub"
-    url: ""
+  - name: "Download on Patchstorage"
+    url: "https://patchstorage.com/dx7-supercollider/"
+  - name: "Docs & discussion"
+    url: "https://forum.critterandguitari.com/t/dx7-supercollider/10694"
+  - name: "View code"
+    url: "https://github.com/dessertplanet/DX7-Supercollider"
+lead:
+  video: "c2UH48AkNeU"
+date: 2024-10-26
 # The one image or video that represents this project. Optional. Uncomment one:
 #
 # lead:
